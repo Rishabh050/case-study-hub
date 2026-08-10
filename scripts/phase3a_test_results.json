@@ -1,0 +1,400 @@
+[
+  {
+    "category": "1. Text-Heavy PDF",
+    "filename": "DevOps.pdf",
+    "fileSizeMb": "5.12 MB",
+    "numPages": 1,
+    "normalTextLength": 9580,
+    "normalExtractionTimeMs": 2346,
+    "enhancedExtractionTimeMs": 3,
+    "hasVisualContent": true,
+    "visualContentType": "Dense Text Diagrams & Code Flow Diagrams",
+    "normalMetadata": {
+      "title": "Shipping Faster. Breaking",
+      "description": "Nothing. Industry",
+      "industry": "Technology & Services",
+      "technologies": [
+        "AWS",
+        "Azure",
+        "GCP",
+        "Kubernetes",
+        "Go"
+      ],
+      "services": [
+        "DevOps"
+      ],
+      "tags": [
+        "Case Study",
+        "Client Project",
+        "AWS",
+        "Azure",
+        "GCP"
+      ],
+      "client_name": null,
+      "challenge": "The organization required modernized infrastructure and optimized application performance to support scale.",
+      "solution": "Implemented modern cloud architecture, streamlined workflow automation, and robust data analytics capabilities.",
+      "key_results": [
+        {
+          "value": "44%",
+          "statement": "44% Infrastructure Cost Reduction\n91"
+        },
+        {
+          "value": "25%",
+          "statement": "25% of releases caused a production incident"
+        },
+        {
+          "value": "$34K",
+          "statement": "$34K to under"
+        },
+        {
+          "value": "91%",
+          "statement": "91% Fewer Release Failures\nProduction incide"
+        }
+      ],
+      "confidence_notes": "Generated using heuristic fallback (AI_API_KEY not configured). Add AI_API_KEY to .env for full LLM analysis."
+    },
+    "enhancedMetadata": {
+      "title": "Shipping Faster. Breaking",
+      "description": "Nothing. Industry Software & Cloud Technology",
+      "industry": "Software & Cloud Technology",
+      "client_name": "Revenues\n12",
+      "technologies": [
+        "AWS",
+        "Azure",
+        "GCP",
+        "Kubernetes",
+        "Terraform"
+      ],
+      "services": [],
+      "tags": [
+        "Software & Cloud Technology",
+        "AWS",
+        "Azure",
+        "GCP"
+      ],
+      "challenge": "Statement StackForge deployed software once a month — and even then, releases",
+      "solution": "CIS designed and implemented ForgeFlow — a fully automated DevOps platform and cultural transformation programme built specifically for",
+      "key_results": [
+        {
+          "value": "47x",
+          "statement": "47x Daily Deployments"
+        },
+        {
+          "value": "44%",
+          "statement": "44% Infrastructure Cost Reduction\n91"
+        },
+        {
+          "value": "8 hours",
+          "statement": "8 hours of manual work and required the entire\nengineering team to b"
+        },
+        {
+          "value": "25%",
+          "statement": "25% of releases caused a production incident, leading to client-"
+        },
+        {
+          "value": "8 hours",
+          "statement": "8 hours now take under 12 minutes.\nImplemented a three-layer testing"
+        },
+        {
+          "value": "$34K",
+          "statement": "$34K to under"
+        },
+        {
+          "value": "90 days",
+          "statement": "90 days of the ForgeFlow platform going live, StackForge Technologie"
+        },
+        {
+          "value": "47x",
+          "statement": "47x Daily Deployments\nFrom 1 release per month to 47 automated d"
+        }
+      ]
+    },
+    "improvements": [
+      "Key Results metrics recovered: 8 quantitative metrics found"
+    ]
+  },
+  {
+    "category": "2. Visually Designed PDF",
+    "filename": "Amcor’s Global Packaging Case-Study.pdf",
+    "fileSizeMb": "9.02 MB",
+    "numPages": 1,
+    "normalTextLength": 10061,
+    "normalExtractionTimeMs": 611,
+    "enhancedExtractionTimeMs": 1,
+    "hasVisualContent": true,
+    "visualContentType": "Multi-column Graphic Layout & Typography Cards",
+    "normalMetadata": {
+      "title": "Transforming Amcor’s Global",
+      "description": "Packaging Workflow with a Custom ERP Platform Clients Testimonial",
+      "industry": "Healthcare",
+      "technologies": [
+        "Cloud Architecture"
+      ],
+      "services": [
+        "Digital Transformation"
+      ],
+      "tags": [
+        "Case Study",
+        "Client Project"
+      ],
+      "client_name": null,
+      "challenge": "The organization required modernized infrastructure and optimized application performance to support scale.",
+      "solution": "Implemented modern cloud architecture, streamlined workflow automation, and robust data analytics capabilities.",
+      "key_results": [
+        {
+          "value": "60%",
+          "statement": "60% reduction in manual tasks due to workflo"
+        },
+        {
+          "value": "60%",
+          "statement": "60% reduction in manual tasks due to workflo"
+        }
+      ],
+      "confidence_notes": "Generated using heuristic fallback (AI_API_KEY not configured). Add AI_API_KEY to .env for full LLM analysis."
+    },
+    "enhancedMetadata": {
+      "title": "Transforming Amcor’s Global",
+      "description": "Packaging Workflow with a Custom ERP Platform Clients Testimonial A Brief Introduction",
+      "industry": "Financial Services & Banking",
+      "client_name": "Revenues Successful\nYears IT Ninjas Proj",
+      "technologies": [],
+      "services": [],
+      "tags": [
+        "Financial Services & Banking"
+      ],
+      "challenge": "Statement Problem Statement Amcor’s rapidly expanding global operations were facing limitations with their",
+      "solution": "Provided Solution Provided We designed and developed a Custom ERP Platform tailored specifically to Amcor’s multi-location manufacturing and supply chain operations.",
+      "key_results": [
+        {
+          "value": "60%",
+          "statement": "60% reduction in manual tasks due to workflow automation. 40"
+        },
+        {
+          "value": "60%",
+          "statement": "60% reduction in manual tasks due to workflow automation.\nReal-t"
+        }
+      ]
+    },
+    "improvements": []
+  },
+  {
+    "category": "3. Charts & Metrics PDF",
+    "filename": "AML-and-Fraud-Detection.pdf",
+    "fileSizeMb": "4.82 MB",
+    "numPages": 1,
+    "normalTextLength": 4125,
+    "normalExtractionTimeMs": 245,
+    "enhancedExtractionTimeMs": 0,
+    "hasVisualContent": true,
+    "visualContentType": "Quantitative Infographics & Percentage Cards",
+    "normalMetadata": {
+      "title": "KYC/AML and Fraud Detection Case",
+      "description": "Study Banking Customer Onboarding, Monitoring, and Fraud Detection",
+      "industry": "Financial Services",
+      "technologies": [
+        "Python"
+      ],
+      "services": [
+        "Machine Learning"
+      ],
+      "tags": [
+        "Case Study",
+        "Client Project",
+        "Python"
+      ],
+      "client_name": null,
+      "challenge": "The organization required modernized infrastructure and optimized application performance to support scale.",
+      "solution": "Implemented modern cloud architecture, streamlined workflow automation, and robust data analytics capabilities.",
+      "key_results": [
+        {
+          "value": "50%",
+          "statement": "50% with automated KYC"
+        },
+        {
+          "value": "45%",
+          "statement": "45% reduction in false positives across AML"
+        }
+      ],
+      "confidence_notes": "Generated using heuristic fallback (AI_API_KEY not configured). Add AI_API_KEY to .env for full LLM analysis."
+    },
+    "enhancedMetadata": {
+      "title": "KYC/AML and Fraud Detection Case",
+      "description": "Study Banking Customer Onboarding, Monitoring, and Fraud Detection Industry",
+      "industry": "Financial Services & Banking",
+      "client_name": "Onboarding,\nMonitoring, and Fraud Detect",
+      "technologies": [
+        "Python"
+      ],
+      "services": [],
+      "tags": [
+        "Financial Services & Banking",
+        "Python"
+      ],
+      "challenge": "Statement A thorough exploration of the various challenges faced by clients during the processes of",
+      "solution": "Provided An integrated platform combining automated KYC verification, AML compliance monitoring, and",
+      "key_results": [
+        {
+          "value": "50%",
+          "statement": "50% with automated KYC.\n\n45"
+        }
+      ]
+    },
+    "improvements": []
+  },
+  {
+    "category": "4. Screenshots & Mobile UI PDF",
+    "filename": "Fitness & Nutrition Platform.pdf",
+    "fileSizeMb": "3.21 MB",
+    "numPages": 1,
+    "normalTextLength": 4977,
+    "normalExtractionTimeMs": 429,
+    "enhancedExtractionTimeMs": 0,
+    "hasVisualContent": true,
+    "visualContentType": "UI Screenshots & App Mockups",
+    "normalMetadata": {
+      "title": "Smart Fitness & Nutrition",
+      "description": "Management Industry",
+      "industry": "Healthcare",
+      "technologies": [
+        "AWS",
+        "React",
+        "Node.js",
+        "PostgreSQL"
+      ],
+      "services": [
+        "Digital Transformation"
+      ],
+      "tags": [
+        "Case Study",
+        "Client Project",
+        "AWS",
+        "React",
+        "Node.js"
+      ],
+      "client_name": null,
+      "challenge": "The organization required modernized infrastructure and optimized application performance to support scale.",
+      "solution": "Implemented modern cloud architecture, streamlined workflow automation, and robust data analytics capabilities.",
+      "key_results": [
+        {
+          "statement": "Successful deployment and operational improvement documented in case study."
+        }
+      ],
+      "confidence_notes": "Generated using heuristic fallback (AI_API_KEY not configured). Add AI_API_KEY to .env for full LLM analysis."
+    },
+    "enhancedMetadata": {
+      "title": "Smart Fitness & Nutrition",
+      "description": "Management Industry Fitness & Nutrition",
+      "industry": "Financial Services & Banking",
+      "client_name": "Revenues\n12",
+      "technologies": [
+        "AWS",
+        "React",
+        "Node.js",
+        "PostgreSQL",
+        "MongoDB",
+        "Flutter",
+        "React Native"
+      ],
+      "services": [],
+      "tags": [
+        "Financial Services & Banking",
+        "AWS",
+        "React",
+        "Node.js"
+      ],
+      "challenge": "Statement Lack of Consistency in Fitness Journey :- Users struggle to maintain consistency due to",
+      "solution": "that would enable: Easy macro (protein, carbs, fats) tracking",
+      "key_results": []
+    },
+    "improvements": [
+      "Technologies expanded from 4 to 7 (AWS, React, Node.js, PostgreSQL, MongoDB, Flutter, React Native)"
+    ]
+  },
+  {
+    "category": "5. Tables & Structured Visual PDF",
+    "filename": "Odoo ERP Implementation Real Estate Development & Construction.pdf",
+    "fileSizeMb": "3.32 MB",
+    "numPages": 1,
+    "normalTextLength": 6744,
+    "normalExtractionTimeMs": 445,
+    "enhancedExtractionTimeMs": 1,
+    "hasVisualContent": true,
+    "visualContentType": "Module Architecture & Data Flow Tables",
+    "normalMetadata": {
+      "title": "Odoo ERP Implementation Real",
+      "description": "Estate Development & Construction",
+      "industry": "Financial Services",
+      "technologies": [
+        "AWS",
+        "Python",
+        "PostgreSQL"
+      ],
+      "services": [
+        "Digital Transformation"
+      ],
+      "tags": [
+        "Case Study",
+        "Client Project",
+        "AWS",
+        "Python",
+        "PostgreSQL"
+      ],
+      "client_name": null,
+      "challenge": "The organization required modernized infrastructure and optimized application performance to support scale.",
+      "solution": "Implemented modern cloud architecture, streamlined workflow automation, and robust data analytics capabilities.",
+      "key_results": [
+        {
+          "value": "40%",
+          "statement": "40% improvement in project monitoring and vi"
+        },
+        {
+          "value": "30%",
+          "statement": "30% reduction in procurement processing time"
+        },
+        {
+          "value": "35%",
+          "statement": "35% faster property booking and sales cycle"
+        },
+        {
+          "value": "25%",
+          "statement": "25% improvement in contractor payment proces"
+        }
+      ],
+      "confidence_notes": "Generated using heuristic fallback (AI_API_KEY not configured). Add AI_API_KEY to .env for full LLM analysis."
+    },
+    "enhancedMetadata": {
+      "title": "Odoo ERP Implementation Real",
+      "description": "Estate Development & Construction Industry",
+      "industry": "Financial Services & Banking",
+      "client_name": "Revenues\n12",
+      "technologies": [
+        "AWS",
+        "Python",
+        "PostgreSQL",
+        "Odoo"
+      ],
+      "services": [],
+      "tags": [
+        "Financial Services & Banking",
+        "AWS",
+        "Python",
+        "PostgreSQL"
+      ],
+      "challenge": "Statement The client encountered several operational challenges:",
+      "solution": "to manage the complete lifecycle of residential and commercial real estate",
+      "key_results": [
+        {
+          "value": "40%",
+          "statement": "40% improvement in project monitoring and visibility\n30"
+        },
+        {
+          "value": "35%",
+          "statement": "35% faster property booking and sales cycle\n25"
+        }
+      ]
+    },
+    "improvements": [
+      "Technologies expanded from 3 to 4 (AWS, Python, PostgreSQL, Odoo)"
+    ]
+  }
+]

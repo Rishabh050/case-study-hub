@@ -1,0 +1,2239 @@
+{
+  "summary": {
+    "totalRecords": 61,
+    "highConfidence": 27,
+    "mediumConfidence": 33,
+    "lowConfidence": 1,
+    "manualReviewRequired": 61
+  },
+  "previews": [
+    {
+      "index": 1,
+      "filename": "AI ML Projects Portfolio _ Case Studies.pdf",
+      "title": "AI/ML Projects Portfolio",
+      "description": "Established in 2003, Cyber Infrastructure Pvt. Ltd. (CIS) is a leading IT and consulting",
+      "industry": "Financial Services & Banking",
+      "clientName": "Background\nThe Exam Proctoring Applicati",
+      "clientCategory": "EXPLICIT_CLIENT",
+      "technologies": [
+        "AWS",
+        "Python",
+        "PostgreSQL",
+        "Java",
+        "TensorFlow",
+        "PyTorch"
+      ],
+      "services": [],
+      "challenge": "The Exam Proctoring Application was developed as an in-house project to address the growing",
+      "solution": "was developed for authentication and text written",
+      "keyResults": [],
+      "tags": [
+        "Financial Services & Banking",
+        "AWS",
+        "Python",
+        "PostgreSQL"
+      ],
+      "confidenceRating": "Medium",
+      "manualReviewFields": [
+        "services",
+        "key_results"
+      ],
+      "notes": "Requires admin review for: services, key_results"
+    },
+    {
+      "index": 2,
+      "filename": "AI Project Manager Agent.pdf",
+      "title": "AI Project Manager Agent",
+      "description": "Industry AI-Powered Project & Workflow Management Platform",
+      "industry": "Software & Technology",
+      "clientName": "Revenues\n12",
+      "clientCategory": "EXPLICIT_CLIENT",
+      "technologies": [
+        "Python"
+      ],
+      "services": [],
+      "challenge": "for intelligent project governance became critical.",
+      "solution": "needed to support Agile ceremonies without disrupting existing team workflows.",
+      "keyResults": [],
+      "tags": [
+        "Software & Technology",
+        "Python"
+      ],
+      "confidenceRating": "Medium",
+      "manualReviewFields": [
+        "services",
+        "key_results"
+      ],
+      "notes": "Requires admin review for: services, key_results"
+    },
+    {
+      "index": 3,
+      "filename": "AI-Assisted Design Validation & Autonomous Testing Workflows.pdf",
+      "title": "AI-Assisted Design Validation &",
+      "description": "Autonomous Testing Workflows Industry",
+      "industry": "Financial Services & Banking",
+      "clientName": "Revenues\n12",
+      "clientCategory": "EXPLICIT_CLIENT",
+      "technologies": [
+        "Docker",
+        "Jenkins",
+        "Python",
+        "REST API",
+        "TensorFlow"
+      ],
+      "services": [],
+      "challenge": "Statement The company faced recurring delays in product releases due to manual design reviews",
+      "solution": "Provided The organization implemented an AI-assisted design validation framework integrated with autonomous testing workflows. Machine learning models",
+      "keyResults": [
+        {
+          "value": "30%",
+          "statement": "30% through AI-generated edge case detection.\nTechnolo"
+        }
+      ],
+      "tags": [
+        "Financial Services & Banking",
+        "Docker",
+        "Jenkins",
+        "Python"
+      ],
+      "confidenceRating": "High",
+      "manualReviewFields": [
+        "services"
+      ],
+      "notes": "Requires admin review for: services"
+    },
+    {
+      "index": 4,
+      "filename": "AI-Powered Customer Calling & Review Management System.pdf",
+      "title": "Case Study: AI-Powered",
+      "description": "Customer Calling & Review Management System",
+      "industry": "Healthcare & Life Sciences",
+      "clientName": "Calling & Review\nManagement System\nIndus",
+      "clientCategory": "EXPLICIT_CLIENT",
+      "technologies": [
+        "Docker",
+        "Python",
+        "TypeScript",
+        "PostgreSQL"
+      ],
+      "services": [],
+      "challenge": "Statement The client needed a scalable and intelligent calling system that could support",
+      "solution": "to handle large call volumes efficiently",
+      "keyResults": [],
+      "tags": [
+        "Healthcare & Life Sciences",
+        "Docker",
+        "Python",
+        "TypeScript"
+      ],
+      "confidenceRating": "Medium",
+      "manualReviewFields": [
+        "services",
+        "key_results"
+      ],
+      "notes": "Requires admin review for: services, key_results"
+    },
+    {
+      "index": 5,
+      "filename": "AIPortfolio.pdf",
+      "title": "AI Portfolio",
+      "description": "We have experience and expertise in the cutting-edge fields of Large Language Models (LLMs), Artificial Intelligence (AI), Machine Learning (ML), and Deep",
+      "industry": "Financial Services & Banking",
+      "clientName": "reviews into\nvarious categories, backgro",
+      "clientCategory": "EXPLICIT_CLIENT",
+      "technologies": [
+        "AWS",
+        "GCP",
+        "Docker",
+        "Python",
+        "PostgreSQL",
+        "MongoDB",
+        "TensorFlow",
+        "PyTorch"
+      ],
+      "services": [],
+      "challenge": "removal for product listing images, and a recommendation system to",
+      "solution": "converts static PDF pages into dynamic, user-friendly, and easily accessible digital articles using advanced AI and",
+      "keyResults": [
+        {
+          "value": "95%",
+          "statement": "95% on the test dataset.\n\nConducted exploratory data a"
+        }
+      ],
+      "tags": [
+        "Financial Services & Banking",
+        "AWS",
+        "GCP",
+        "Docker"
+      ],
+      "confidenceRating": "High",
+      "manualReviewFields": [
+        "services"
+      ],
+      "notes": "Requires admin review for: services"
+    },
+    {
+      "index": 6,
+      "filename": "AML-and-Fraud-Detection.pdf",
+      "title": "KYC/AML and Fraud Detection Case",
+      "description": "Study Banking Customer Onboarding, Monitoring, and Fraud Detection",
+      "industry": "Financial Services & Banking",
+      "clientName": "Onboarding,\nMonitoring, and Fraud Detect",
+      "clientCategory": "EXPLICIT_CLIENT",
+      "technologies": [
+        "Python"
+      ],
+      "services": [],
+      "challenge": "Statement A thorough exploration of the various challenges faced by clients during the processes of",
+      "solution": "Provided An integrated platform combining automated KYC verification, AML compliance monitoring, and",
+      "keyResults": [
+        {
+          "value": "50%",
+          "statement": "50% with automated KYC.\n\n45"
+        }
+      ],
+      "tags": [
+        "Financial Services & Banking",
+        "Python"
+      ],
+      "confidenceRating": "High",
+      "manualReviewFields": [
+        "services"
+      ],
+      "notes": "Requires admin review for: services"
+    },
+    {
+      "index": 7,
+      "filename": "Amcor’s Global Packaging Case-Study.pdf",
+      "title": "Transforming Amcor’s Global",
+      "description": "Amcor develops and delivers packaging solutions through two main",
+      "industry": "Financial Services & Banking",
+      "clientName": "Revenues Successful\nYears IT Ninjas Proj",
+      "clientCategory": "EXPLICIT_CLIENT",
+      "technologies": [],
+      "services": [],
+      "challenge": "Statement Problem Statement Amcor’s rapidly expanding global operations were facing limitations with their",
+      "solution": "Provided Solution Provided We designed and developed a Custom ERP Platform tailored specifically to Amcor’s multi-location manufacturing and supply chain operations.",
+      "keyResults": [
+        {
+          "value": "60%",
+          "statement": "60% reduction in manual tasks due to workflow automati"
+        }
+      ],
+      "tags": [
+        "Financial Services & Banking"
+      ],
+      "confidenceRating": "Medium",
+      "manualReviewFields": [
+        "technologies",
+        "services"
+      ],
+      "notes": "Requires admin review for: technologies, services"
+    },
+    {
+      "index": 8,
+      "filename": "Architecting a Universal AI Agent for Multi-Domain Conversational Commerce.pdf",
+      "title": "Architecting a Universal AI Agent for",
+      "description": "The modern digital economy is currently defined by \"App Fatigue.\"",
+      "industry": "Financial Services & Banking",
+      "clientName": "Revenues Successful\nYears IT Ninjas\nAbou",
+      "clientCategory": "EXPLICIT_CLIENT",
+      "technologies": [
+        "React",
+        "Python",
+        "PostgreSQL",
+        "Redis"
+      ],
+      "services": [],
+      "challenge": "Statement The client’s existing infrastructure was a collection of \"Digital Silos.\" Each",
+      "solution": "with unique authentication protocols and data structures. This led",
+      "keyResults": [],
+      "tags": [
+        "Financial Services & Banking",
+        "React",
+        "Python",
+        "PostgreSQL"
+      ],
+      "confidenceRating": "Medium",
+      "manualReviewFields": [
+        "services",
+        "key_results"
+      ],
+      "notes": "Requires admin review for: services, key_results"
+    },
+    {
+      "index": 9,
+      "filename": "Arion Pharama Case Study.pdf",
+      "title": "Case Study: Implementation of Arion for",
+      "description": "A mid-sized pharmaceutical manufacturing organization sought to improve its data",
+      "industry": "Manufacturing & Packaging",
+      "clientName": "Revenues\n12",
+      "clientCategory": "EXPLICIT_CLIENT",
+      "technologies": [],
+      "services": [],
+      "challenge": null,
+      "solution": "Overview Developed an end-to-end proctoring application that included various techniques such as NLP, Computer Vision etc, OpenCV was heavily used in this for posture detection, eye",
+      "keyResults": [
+        {
+          "value": "100%",
+          "statement": "100% digital batch traceability\nReal-time inventory vis"
+        },
+        {
+          "value": "70%",
+          "statement": "70% D ata accuracy improved significantly\nTrend analys"
+        }
+      ],
+      "tags": [
+        "Manufacturing & Packaging"
+      ],
+      "confidenceRating": "Medium",
+      "manualReviewFields": [
+        "technologies",
+        "services",
+        "challenge"
+      ],
+      "notes": "Requires admin review for: technologies, services, challenge"
+    },
+    {
+      "index": 10,
+      "filename": "Bank Case Study-warm.pdf",
+      "title": "Implemented Web and Mobile",
+      "description": "Banking Solutions for a Bank with 20 Million Customers",
+      "industry": "Financial Services & Banking",
+      "clientName": "Revenues\n12",
+      "clientCategory": "EXPLICIT_CLIENT",
+      "technologies": [
+        "Swift",
+        "Java"
+      ],
+      "services": [],
+      "challenge": "to develop and enhance their online and mobile banking software to meet the ever-",
+      "solution": null,
+      "keyResults": [
+        {
+          "value": "$1.4",
+          "statement": "$1.4 billion.\nClient"
+        }
+      ],
+      "tags": [
+        "Financial Services & Banking",
+        "Swift",
+        "Java"
+      ],
+      "confidenceRating": "Medium",
+      "manualReviewFields": [
+        "services",
+        "solution"
+      ],
+      "notes": "Requires admin review for: services, solution"
+    },
+    {
+      "index": 11,
+      "filename": "Betting-website.pdf",
+      "title": "Fantasy Gaming Website Case",
+      "description": "To address the rapidly growing demand for secure, scalable, and",
+      "industry": "Financial Services & Banking",
+      "clientName": "Revenues\n12",
+      "clientCategory": "EXPLICIT_CLIENT",
+      "technologies": [
+        "AWS",
+        "Docker",
+        "React",
+        "Python",
+        "PostgreSQL",
+        "Redis",
+        "TensorFlow"
+      ],
+      "services": [],
+      "challenge": "Statement The client faced significant challenges in launching a scalable and reliable fantasy sports",
+      "solution": "Managing unpredictable traffic spikes during",
+      "keyResults": [],
+      "tags": [
+        "Financial Services & Banking",
+        "AWS",
+        "Docker",
+        "React"
+      ],
+      "confidenceRating": "Medium",
+      "manualReviewFields": [
+        "services",
+        "key_results"
+      ],
+      "notes": "Requires admin review for: services, key_results"
+    },
+    {
+      "index": 12,
+      "filename": "Beumer Quality Management System (QMS) .pdf",
+      "title": "Case Study: Beumer Quality",
+      "description": "BEUMER India Pvt Ltd (BIL), a major player in infrastructure and",
+      "industry": "Financial Services & Banking",
+      "clientName": "Revenues\n12",
+      "clientCategory": "EXPLICIT_CLIENT",
+      "technologies": [
+        "Flutter"
+      ],
+      "services": [],
+      "challenge": "BEUMER India Pvt Ltd faced critical inefficiencies in managing its quality inspections and",
+      "solution": "A comprehensive Quality Management System (QMS) was developed to digitize the end-to-end inspection and safety reporting life-cycle",
+      "keyResults": [
+        {
+          "value": "100%",
+          "statement": "100% Hours\nAfter"
+        },
+        {
+          "value": "-60%",
+          "statement": "-60% Metric"
+        },
+        {
+          "value": "60%",
+          "statement": "60% Quantifiable Benefits\n80"
+        },
+        {
+          "value": "100%",
+          "statement": "100% traceability from report to resolution\n60"
+        }
+      ],
+      "tags": [
+        "Financial Services & Banking",
+        "Flutter"
+      ],
+      "confidenceRating": "High",
+      "manualReviewFields": [
+        "services"
+      ],
+      "notes": "Requires admin review for: services"
+    },
+    {
+      "index": 13,
+      "filename": "CIS_Dynamics365_ERP_Comparison Case Study.pdf",
+      "title": "Case Study: Custom ERP vs Odoo",
+      "description": "This document provides a professional, in-depth comparison of four ERP solutions for Employee Management (HR functions):",
+      "industry": "Financial Services & Banking",
+      "clientName": "Revenues\n12",
+      "clientCategory": "EXPLICIT_CLIENT",
+      "technologies": [
+        "Azure",
+        "Odoo",
+        "Power Apps"
+      ],
+      "services": [],
+      "challenge": "Data Migration High complexity due to bespoke",
+      "solution": "and custom scripts. Moderate; tools available, but",
+      "keyResults": [
+        {
+          "value": "30%",
+          "statement": "30% efficiency gains through tailored\nworkflows and op"
+        }
+      ],
+      "tags": [
+        "Financial Services & Banking",
+        "Azure",
+        "Odoo",
+        "Power Apps"
+      ],
+      "confidenceRating": "High",
+      "manualReviewFields": [
+        "services"
+      ],
+      "notes": "Requires admin review for: services"
+    },
+    {
+      "index": 14,
+      "filename": "Case Study - Biotech Digital Platform.pdf",
+      "title": "Case Study: Biomass Industry +",
+      "description": "Biotech Digital Platform Industry",
+      "industry": "Healthcare & Life Sciences",
+      "clientName": "Revenues\n12",
+      "clientCategory": "EXPLICIT_CLIENT",
+      "technologies": [
+        "AWS",
+        "React",
+        "PostgreSQL",
+        "REST API"
+      ],
+      "services": [],
+      "challenge": "Statement The plant’s industrial processes were mostly manual or semi-automated, leading to:",
+      "solution": "Provided A digital plant monitoring and bioprocess analytics platform was developed using Django REST Framework and ReactJS, integrated with",
+      "keyResults": [
+        {
+          "value": "14%",
+          "statement": "14% Automated production record keeping Eliminated spr"
+        }
+      ],
+      "tags": [
+        "Healthcare & Life Sciences",
+        "AWS",
+        "React",
+        "PostgreSQL"
+      ],
+      "confidenceRating": "High",
+      "manualReviewFields": [
+        "services"
+      ],
+      "notes": "Requires admin review for: services"
+    },
+    {
+      "index": 15,
+      "filename": "Case Study - Optimum Services For Industry.pdf",
+      "title": "Industrial Materials Supply &",
+      "description": "OPTIMUM SERVICES FOR INDUSTRY is an industrial operations",
+      "industry": "Financial Services & Banking",
+      "clientName": "Revenues\n12",
+      "clientCategory": "EXPLICIT_CLIENT",
+      "technologies": [
+        "AWS",
+        "Azure",
+        "React",
+        "Node.js",
+        "PostgreSQL"
+      ],
+      "services": [],
+      "challenge": "Statement Fragmented Department Operations :- Mechanical, chemicals, electrical and instruments",
+      "solution": "was designed with a strong focus on innovation, performance,",
+      "keyResults": [],
+      "tags": [
+        "Financial Services & Banking",
+        "AWS",
+        "Azure",
+        "React"
+      ],
+      "confidenceRating": "Medium",
+      "manualReviewFields": [
+        "services",
+        "key_results"
+      ],
+      "notes": "Requires admin review for: services, key_results"
+    },
+    {
+      "index": 16,
+      "filename": "Case Study_ Ad-Tech.pdf",
+      "title": "Driving AdTech Success Through",
+      "description": "Intuitive Design and Predictive Analytics",
+      "industry": "Financial Services & Banking",
+      "clientName": "Revenues\n12",
+      "clientCategory": "EXPLICIT_CLIENT",
+      "technologies": [
+        "AWS",
+        "Docker",
+        "Kubernetes",
+        "React",
+        "Node.js",
+        "Python",
+        "MongoDB",
+        "Microservices"
+      ],
+      "services": [],
+      "challenge": "The client's existing platform was struggling to keep pace with",
+      "solution": "using Node.js, Python, and MongoDB to handle real-time data processing and ad",
+      "keyResults": [
+        {
+          "value": "75%",
+          "statement": "75% increase in website traffic and a massive boost in"
+        },
+        {
+          "value": "10x",
+          "statement": "10x more traffic, delivering ads with"
+        },
+        {
+          "value": "10ms",
+          "statement": "10ms latency.\nImproved User Experience\nCampaign setup t"
+        },
+        {
+          "value": "96%",
+          "statement": "96% user satisfaction scores for the new UI.\nActionabl"
+        },
+        {
+          "value": "34%",
+          "statement": "34% through better targeting and reporting.\nSeamless I"
+        }
+      ],
+      "tags": [
+        "Financial Services & Banking",
+        "AWS",
+        "Docker",
+        "Kubernetes"
+      ],
+      "confidenceRating": "High",
+      "manualReviewFields": [
+        "services"
+      ],
+      "notes": "Requires admin review for: services"
+    },
+    {
+      "index": 17,
+      "filename": "Case Study_ Blockchain-ERC‑20 Token Development from Scratch.pdf",
+      "title": "Case Study: ERC‑20 Token",
+      "description": "Development from Scratch Industry",
+      "industry": "Financial Services & Banking",
+      "clientName": "Revenues\n12",
+      "clientCategory": "EXPLICIT_CLIENT",
+      "technologies": [
+        "AWS",
+        "Docker",
+        "PostgreSQL",
+        "Redis"
+      ],
+      "services": [],
+      "challenge": "Statement The client required a production‑ready ERC‑20 token platform that",
+      "solution": "built on Ethereum, ensuring gas‑optimized performance",
+      "keyResults": [],
+      "tags": [
+        "Financial Services & Banking",
+        "AWS",
+        "Docker",
+        "PostgreSQL"
+      ],
+      "confidenceRating": "Medium",
+      "manualReviewFields": [
+        "services",
+        "key_results"
+      ],
+      "notes": "Requires admin review for: services, key_results"
+    },
+    {
+      "index": 18,
+      "filename": "Case Study_ Hands Free Trading.pdf",
+      "title": "Case Study: Hands Free",
+      "description": "The project involved the development and deployment of a comprehensive Hands-",
+      "industry": "Financial Services & Banking",
+      "clientName": "Revenues\n12",
+      "clientCategory": "EXPLICIT_CLIENT",
+      "technologies": [
+        "AWS",
+        "Docker",
+        "React",
+        "Python",
+        "PostgreSQL",
+        "Redis",
+        "Kafka",
+        "Microservices"
+      ],
+      "services": [],
+      "challenge": "Statement Manual Trading & Execution Complexity : Retail traders relied on manual trade execution,",
+      "solution": "to support growing users and trading volume",
+      "keyResults": [],
+      "tags": [
+        "Financial Services & Banking",
+        "AWS",
+        "Docker",
+        "React"
+      ],
+      "confidenceRating": "Medium",
+      "manualReviewFields": [
+        "services",
+        "key_results"
+      ],
+      "notes": "Requires admin review for: services, key_results"
+    },
+    {
+      "index": 19,
+      "filename": "Case Study_ Multi-Network Streaming App for International TV Brands.pdf",
+      "title": "Multi-Network Streaming App",
+      "description": "The client is a leading player in the field of digital streaming that",
+      "industry": "Financial Services & Banking",
+      "clientName": "Revenues\n12",
+      "clientCategory": "EXPLICIT_CLIENT",
+      "technologies": [],
+      "services": [],
+      "challenge": "As of 2015, this client was able to help large telcos make its live television streaming",
+      "solution": "to integrating streaming platforms and improving efficiency has enhanced",
+      "keyResults": [
+        {
+          "value": "40%",
+          "statement": "40% improvement in the satisfaction\nscores of users be"
+        },
+        {
+          "value": "50%",
+          "statement": "50% which results in a more fluid playback\nand decreas"
+        },
+        {
+          "value": "35%",
+          "statement": "35% in the resolution of video at peak hours.\nStreamli"
+        },
+        {
+          "value": "45%",
+          "statement": "45% with automated management and standard\nprocedures."
+        },
+        {
+          "value": "70%",
+          "statement": "70% in peak traffic with no any\nperformance loss, prov"
+        },
+        {
+          "value": "55%",
+          "statement": "55% thanks to improved\ncloud infrastructure as well as"
+        }
+      ],
+      "tags": [
+        "Financial Services & Banking"
+      ],
+      "confidenceRating": "Medium",
+      "manualReviewFields": [
+        "technologies",
+        "services"
+      ],
+      "notes": "Requires admin review for: technologies, services"
+    },
+    {
+      "index": 20,
+      "filename": "Case Study_ Redefining Social Bookmarking and Recommendations with Zigglu Social Networking App.pdf",
+      "title": "Redefining Social Bookmarking",
+      "description": "Zigglu is a social networking app that has a 1.2 million user base with 0.45 million monthly active users. The social networking app was",
+      "industry": "Financial Services & Banking",
+      "clientName": "Revenues\n12",
+      "clientCategory": "EXPLICIT_CLIENT",
+      "technologies": [
+        "React",
+        "Node.js",
+        "React Native"
+      ],
+      "services": [],
+      "challenge": "Despite the increasing popularity of social networking apps, Zigglu spotted gaps in the",
+      "solution": "to recommendation and analytics has made Zigglu",
+      "keyResults": [
+        {
+          "value": "40%",
+          "statement": "40% in\ninteraction and engagement within the applicati"
+        },
+        {
+          "value": "60%",
+          "statement": "60% increase in the number of\nusers who signed up with"
+        },
+        {
+          "value": "90%",
+          "statement": "90% of users\nwere satisfied with the app"
+        }
+      ],
+      "tags": [
+        "Financial Services & Banking",
+        "React",
+        "Node.js",
+        "React Native"
+      ],
+      "confidenceRating": "High",
+      "manualReviewFields": [
+        "services"
+      ],
+      "notes": "Requires admin review for: services"
+    },
+    {
+      "index": 21,
+      "filename": "Case Study_ Zenstars - A Salon Appointment Booking App.pdf",
+      "title": "Zenstars - A Salon",
+      "description": "Appointment Booking App Industry",
+      "industry": "Financial Services & Banking",
+      "clientName": "Revenues\n12",
+      "clientCategory": "EXPLICIT_CLIENT",
+      "technologies": [
+        "React",
+        "React Native"
+      ],
+      "services": [],
+      "challenge": "ZenStars is a comprehensive salon management application designed to streamline",
+      "solution": "for both salon owners and customers. Zenstars has over 250,000 active users, including both clients and",
+      "keyResults": [
+        {
+          "value": "20%",
+          "statement": "20% month-over-month.\nZenstars is a dynamic salon appo"
+        }
+      ],
+      "tags": [
+        "Financial Services & Banking",
+        "React",
+        "React Native"
+      ],
+      "confidenceRating": "High",
+      "manualReviewFields": [
+        "services"
+      ],
+      "notes": "Requires admin review for: services"
+    },
+    {
+      "index": 22,
+      "filename": "Case-Study- SME-Banking.pdf",
+      "title": "Case Study: SME- Loan-Banking",
+      "description": null,
+      "industry": "Financial Services & Banking",
+      "clientName": "Revenues\n12",
+      "clientCategory": "EXPLICIT_CLIENT",
+      "technologies": [
+        "Flutter"
+      ],
+      "services": [],
+      "challenge": "Statement Earlier client has shared us the requirement for enhancing the running application , in that",
+      "solution": "Provided The solution that we provided involved in making a banking platform with the help of Django REST framework and Angular with Flutter. The project is",
+      "keyResults": [],
+      "tags": [
+        "Financial Services & Banking",
+        "Flutter"
+      ],
+      "confidenceRating": "Medium",
+      "manualReviewFields": [
+        "description",
+        "services",
+        "key_results"
+      ],
+      "notes": "Requires admin review for: description, services, key_results"
+    },
+    {
+      "index": 23,
+      "filename": "Case-Study-Self-Hosted Live Classroom Platform with LiveKit Infrastructure.pdf",
+      "title": "Self-Hosted Live Classroom Platform",
+      "description": "Client : A growing EdTech company operating in the K-12 and higher education segment, serving students and institutions across multiple cities.",
+      "industry": "Software & Technology",
+      "clientName": "Revenues\n12",
+      "clientCategory": "EXPLICIT_CLIENT",
+      "technologies": [
+        "AWS",
+        "Docker",
+        "Kubernetes",
+        "React",
+        "Node.js",
+        "PostgreSQL",
+        "Redis",
+        "LiveKit"
+      ],
+      "services": [],
+      "challenge": "Statement The client was previously relying on redirecting students to external platforms (Zoom and Google Meet) for live classes. This created several critical",
+      "solution": "Cyber Infrastructure Pvt. Ltd. designed and deployed a fully native, self-hosted live video infrastructure using LiveKit as the core Selective",
+      "keyResults": [
+        {
+          "value": "60%",
+          "statement": "60% and\nmaking playback available within minutes of\nse"
+        },
+        {
+          "value": "300ms",
+          "statement": "300ms end-to-end\nPlatform Uptime"
+        },
+        {
+          "value": "99.7%",
+          "statement": "99.7% Session Recording Availability Within 5"
+        },
+        {
+          "value": "60%",
+          "statement": "60% reduction\nStudent Drop-Off Due to Technical Issues"
+        },
+        {
+          "value": "74%",
+          "statement": "74% vs. prior Zoom-based setup\nThird-Party Video Vendo"
+        },
+        {
+          "value": "100%",
+          "statement": "100% within client"
+        }
+      ],
+      "tags": [
+        "Software & Technology",
+        "AWS",
+        "Docker",
+        "Kubernetes"
+      ],
+      "confidenceRating": "High",
+      "manualReviewFields": [
+        "services"
+      ],
+      "notes": "Requires admin review for: services"
+    },
+    {
+      "index": 24,
+      "filename": "CaseStudy_Semiconductors.pdf",
+      "title": "Accelerating Semiconductor",
+      "description": "NovaSilicon is one of North America's fastest-growing chip manufacturers. Despite world-class engineering, their digital tools were years behind — disconnected systems and",
+      "industry": "Financial Services & Banking",
+      "clientName": "Revenues\n12",
+      "clientCategory": "EXPLICIT_CLIENT",
+      "technologies": [],
+      "services": [],
+      "challenge": "Statement NovaSilicon ran 6 fabrication plants producing billions of chips per year — but",
+      "solution": "CIS designed and built FabConnect — a custom Digital Operations Platform for multi-site semiconductor manufacturing. Think of it as mission",
+      "keyResults": [
+        {
+          "value": "$3.8M",
+          "statement": "$3.8M annually, and connecting 6\nglobal fabs in real tim"
+        },
+        {
+          "value": "35%",
+          "statement": "35% Faster Production Cycle\n99.4"
+        },
+        {
+          "value": "$3.8M",
+          "statement": "$3.8M Annual Cost Savings\n10 Wks\nFull Implementation\nInd"
+        },
+        {
+          "value": "4 days",
+          "statement": "4 days every month to compile cost-per-wafer reports by\np"
+        },
+        {
+          "value": "$180K",
+          "statement": "$180K in lost production and emergency\nrepairs.\nManual C"
+        },
+        {
+          "value": "6 days",
+          "statement": "6 days per cycle, prone to costly human error.\nDisconnect"
+        }
+      ],
+      "tags": [
+        "Financial Services & Banking"
+      ],
+      "confidenceRating": "Medium",
+      "manualReviewFields": [
+        "technologies",
+        "services"
+      ],
+      "notes": "Requires admin review for: technologies, services"
+    },
+    {
+      "index": 25,
+      "filename": "Centralized UAS Management and Monitoring System Enhances Operations Efficiency and Security.pdf",
+      "title": "Centralized UAS Management",
+      "description": "of drone status, flight information, and operational performance metrics.",
+      "industry": "Financial Services & Banking",
+      "clientName": "Revenues\n12",
+      "clientCategory": "EXPLICIT_CLIENT",
+      "technologies": [
+        "Power Apps",
+        "Power Automate"
+      ],
+      "services": [],
+      "challenge": "Dominion Energy faced significant challenges when it came to maintaining and managing",
+      "solution": null,
+      "keyResults": [
+        {
+          "value": "$57",
+          "statement": "$57 billion. The company serves electricity services t"
+        },
+        {
+          "value": "35%",
+          "statement": "35% and\nreduced the risk of compliance problems.\nAdvan"
+        },
+        {
+          "value": "60%",
+          "statement": "60% in downtime associated with\nmaintenance, as well a"
+        }
+      ],
+      "tags": [
+        "Financial Services & Banking",
+        "Power Apps",
+        "Power Automate"
+      ],
+      "confidenceRating": "Medium",
+      "manualReviewFields": [
+        "services",
+        "solution"
+      ],
+      "notes": "Requires admin review for: services, solution"
+    },
+    {
+      "index": 26,
+      "filename": "ConsultNet.Online - A Telemedicine App That Provides Live Doctor Consultation Services‬.pdf",
+      "title": "ConsultNet.Online - A Telemedicine",
+      "description": "The client is a visionary leader in the healthcare industry having over 500,000 active users, including both patients and healthcare",
+      "industry": "Financial Services & Banking",
+      "clientName": "Revenues\n12",
+      "clientCategory": "EXPLICIT_CLIENT",
+      "technologies": [
+        "React",
+        "Node.js",
+        "React Native"
+      ],
+      "services": [],
+      "challenge": "in healthcare management, the client recognized the growing need for a telemedicine platform",
+      "solution": "has allowed us to grow without compromising performance, and the enhanced security measures have given us",
+      "keyResults": [
+        {
+          "value": "15%",
+          "statement": "15% month-\nover-month. With a strong background in hea"
+        }
+      ],
+      "tags": [
+        "Financial Services & Banking",
+        "React",
+        "Node.js",
+        "React Native"
+      ],
+      "confidenceRating": "High",
+      "manualReviewFields": [
+        "services"
+      ],
+      "notes": "Requires admin review for: services"
+    },
+    {
+      "index": 27,
+      "filename": "DEVELOPMENT BANK OF SOUTHERN AFRICA (DBSA).pdf",
+      "title": "DEVELOPMENT BANK OF",
+      "description": "The Development Bank of Southern Africa (DBSA) operates as a critical financial institution supporting infrastructure development across the continent. Managing a complex portfolio of lending",
+      "industry": "Financial Services & Banking",
+      "clientName": "Development Bank of Southern Africa",
+      "clientCategory": "EXPLICIT_CLIENT",
+      "technologies": [
+        "AWS",
+        "Docker",
+        "Kubernetes",
+        "Terraform"
+      ],
+      "services": [],
+      "challenge": "for regulatory compliance, the criticality of availability, the sensitivity of",
+      "solution": "Delivered by CISIN Cloud Infrastructure & Migration Layer",
+      "keyResults": [
+        {
+          "value": "60%",
+          "statement": "60% 99.95"
+        },
+        {
+          "value": "40%",
+          "statement": "40% reduction in infrastructure spend through resource"
+        }
+      ],
+      "tags": [
+        "Financial Services & Banking",
+        "AWS",
+        "Docker",
+        "Kubernetes"
+      ],
+      "confidenceRating": "High",
+      "manualReviewFields": [
+        "services"
+      ],
+      "notes": "Requires admin review for: services"
+    },
+    {
+      "index": 28,
+      "filename": "DevOps.pdf",
+      "title": "Shipping Faster. Breaking",
+      "description": "StackForge Technologies builds a B2B SaaS platform used by 400+ enterprise clients for workflow automation. Their engineering team was talented but trapped — slow manual",
+      "industry": "Software & Technology",
+      "clientName": "Revenues\n12",
+      "clientCategory": "EXPLICIT_CLIENT",
+      "technologies": [
+        "AWS",
+        "Azure",
+        "GCP",
+        "Kubernetes",
+        "Terraform"
+      ],
+      "services": [],
+      "challenge": "Statement StackForge deployed software once a month — and even then, releases",
+      "solution": "CIS designed and implemented ForgeFlow — a fully automated DevOps platform and cultural transformation programme built specifically for",
+      "keyResults": [
+        {
+          "value": "47x",
+          "statement": "47x Daily Deployments"
+        },
+        {
+          "value": "44%",
+          "statement": "44% Infrastructure Cost Reduction\n91"
+        },
+        {
+          "value": "8 hours",
+          "statement": "8 hours of manual work and required the entire\nengineering"
+        },
+        {
+          "value": "25%",
+          "statement": "25% of releases caused a production incident, leading"
+        },
+        {
+          "value": "8 hours",
+          "statement": "8 hours now take under 12 minutes.\nImplemented a three-lay"
+        },
+        {
+          "value": "$34K",
+          "statement": "$34K to under"
+        }
+      ],
+      "tags": [
+        "Software & Technology",
+        "AWS",
+        "Azure",
+        "GCP"
+      ],
+      "confidenceRating": "High",
+      "manualReviewFields": [
+        "services"
+      ],
+      "notes": "Requires admin review for: services"
+    },
+    {
+      "index": 29,
+      "filename": "ETRAVEL HUB.pdf",
+      "title": "E-TRAVEL",
+      "description": "We designed and implemented a comprehensive cloud infrastructure and DevOps solution for eTravel Hub, a leading digital travel document assistance",
+      "industry": "Financial Services & Banking",
+      "clientName": "Revenues\n8",
+      "clientCategory": "EXPLICIT_CLIENT",
+      "technologies": [
+        "AWS",
+        "Docker",
+        "Kubernetes",
+        "Terraform",
+        "Python",
+        "PostgreSQL",
+        "Redis"
+      ],
+      "services": [],
+      "challenge": "Statement The eTravel Hub platform faced critical infrastructure and operational",
+      "solution": "for eTravel Hub, a leading digital travel document assistance",
+      "keyResults": [
+        {
+          "value": "99.99%",
+          "statement": "99.99% Uptime Achieved"
+        },
+        {
+          "value": "85%",
+          "statement": "85% Faster Deployments"
+        },
+        {
+          "value": "60%",
+          "statement": "60% Infrastructure Cost Reduction"
+        },
+        {
+          "value": "10x",
+          "statement": "10x traffic growth without code changes or service deg"
+        },
+        {
+          "value": "99.99%",
+          "statement": "99.99% uptime through multi-region failover,\nKubernetes H"
+        },
+        {
+          "value": "60%",
+          "statement": "60% through auto-scaling\noptimization, reserved capaci"
+        }
+      ],
+      "tags": [
+        "Financial Services & Banking",
+        "AWS",
+        "Docker",
+        "Kubernetes"
+      ],
+      "confidenceRating": "High",
+      "manualReviewFields": [
+        "services"
+      ],
+      "notes": "Requires admin review for: services"
+    },
+    {
+      "index": 30,
+      "filename": "Fitness & Nutrition Platform.pdf",
+      "title": "Smart Fitness & Nutrition",
+      "description": "6PackMacros is a lifestyle-focused fitness platform designed to help",
+      "industry": "Financial Services & Banking",
+      "clientName": "Revenues\n12",
+      "clientCategory": "EXPLICIT_CLIENT",
+      "technologies": [
+        "AWS",
+        "React",
+        "Node.js",
+        "PostgreSQL",
+        "MongoDB",
+        "Flutter",
+        "React Native"
+      ],
+      "services": [],
+      "challenge": "Statement Lack of Consistency in Fitness Journey :- Users struggle to maintain consistency due to",
+      "solution": "that would enable: Easy macro (protein, carbs, fats) tracking",
+      "keyResults": [],
+      "tags": [
+        "Financial Services & Banking",
+        "AWS",
+        "React",
+        "Node.js"
+      ],
+      "confidenceRating": "Medium",
+      "manualReviewFields": [
+        "services",
+        "key_results"
+      ],
+      "notes": "Requires admin review for: services, key_results"
+    },
+    {
+      "index": 31,
+      "filename": "Football Fan Engagement.pdf",
+      "title": "Building a Feature-Rich Football",
+      "description": "Mess Ice is a football-focused mobile application designed to transform",
+      "industry": "Financial Services & Banking",
+      "clientName": "Revenues Successful\nYears IT Ninjas Proj",
+      "clientCategory": "EXPLICIT_CLIENT",
+      "technologies": [
+        "AWS",
+        "Node.js",
+        "Flutter"
+      ],
+      "services": [],
+      "challenge": null,
+      "solution": "to building Mess Ice helped us launch a feature-rich",
+      "keyResults": [],
+      "tags": [
+        "Financial Services & Banking",
+        "AWS",
+        "Node.js",
+        "Flutter"
+      ],
+      "confidenceRating": "Medium",
+      "manualReviewFields": [
+        "services",
+        "challenge",
+        "key_results"
+      ],
+      "notes": "Requires admin review for: services, challenge, key_results"
+    },
+    {
+      "index": 32,
+      "filename": "How Real-Time Bidding Transformed an Online Car Marketplace.pdf",
+      "title": "How Real-Time Bidding",
+      "description": "Huseyin Demir, founder and managing director of an online car",
+      "industry": "Financial Services & Banking",
+      "clientName": "Revenues\n12",
+      "clientCategory": "EXPLICIT_CLIENT",
+      "technologies": [
+        "React",
+        "Node.js"
+      ],
+      "services": [],
+      "challenge": "The client's existing online car trading platform fails to update bid statuses and auction",
+      "solution": "WebSockets Integration for Real-time Communication",
+      "keyResults": [],
+      "tags": [
+        "Financial Services & Banking",
+        "React",
+        "Node.js"
+      ],
+      "confidenceRating": "Medium",
+      "manualReviewFields": [
+        "services",
+        "key_results"
+      ],
+      "notes": "Requires admin review for: services, key_results"
+    },
+    {
+      "index": 33,
+      "filename": "How We Helped Sam and G Man Scale Their Multi-Property Web Operations Across Global Cloud Infrastructure.pdf",
+      "title": "How We Helped Sam and G Man Scale Their",
+      "description": "Multi-Property Web Operations Across Global Cloud Infrastructure",
+      "industry": "Financial Services & Banking",
+      "clientName": "Sam and G Man\nIndustry\nWeb Services & Di",
+      "clientCategory": "EXPLICIT_CLIENT",
+      "technologies": [
+        "AWS",
+        "Next.js",
+        "Node.js"
+      ],
+      "services": [],
+      "challenge": "No One Warns You About When you operate 15+ web properties across different hosting platforms, one SSL certificate expiration",
+      "solution": "improvements before they were requested Where Automation Changed Everything",
+      "keyResults": [
+        {
+          "value": "99.95%",
+          "statement": "99.95% Uptime Maintained Across All Properties\nSSL"
+        },
+        {
+          "value": "100%",
+          "statement": "100% HTTPS Coverage with Valid Certificates\nBackup Succ"
+        },
+        {
+          "value": "100%",
+          "statement": "100% Recovery Capability Across All Servers\nMigration E"
+        },
+        {
+          "value": "60 days",
+          "statement": "60 days before expiration across all\ncertificate authoriti"
+        },
+        {
+          "value": "100%",
+          "statement": "100% SSL certificate compliance maintained, zero expire"
+        },
+        {
+          "value": "100%",
+          "statement": "100% success rate\n\n24"
+        }
+      ],
+      "tags": [
+        "Financial Services & Banking",
+        "AWS",
+        "Next.js",
+        "Node.js"
+      ],
+      "confidenceRating": "High",
+      "manualReviewFields": [
+        "services"
+      ],
+      "notes": "Requires admin review for: services"
+    },
+    {
+      "index": 34,
+      "filename": "Locker Management Casestudy.pdf",
+      "title": "Locker Management",
+      "description": "The project involved the development and deployment of a",
+      "industry": "Financial Services & Banking",
+      "clientName": "Revenues\n12",
+      "clientCategory": "EXPLICIT_CLIENT",
+      "technologies": [
+        "Docker",
+        "PostgreSQL"
+      ],
+      "services": [],
+      "challenge": "Statement Manual Application & Allocation :- Time-intensive paper-based locker applications,",
+      "solution": "ensures scalable and efficient operations for environments such as offices, gyms, hostels, and",
+      "keyResults": [],
+      "tags": [
+        "Financial Services & Banking",
+        "Docker",
+        "PostgreSQL"
+      ],
+      "confidenceRating": "Medium",
+      "manualReviewFields": [
+        "services",
+        "key_results"
+      ],
+      "notes": "Requires admin review for: services, key_results"
+    },
+    {
+      "index": 35,
+      "filename": "MEDIAPAD - The Comprehensive Digital Entertainment Platform.pdf",
+      "title": "MEDIAPAD (One Platform,",
+      "description": "Endless Possibilities) Industry",
+      "industry": "Financial Services & Banking",
+      "clientName": "Revenues\n12",
+      "clientCategory": "EXPLICIT_CLIENT",
+      "technologies": [
+        "React",
+        "MongoDB"
+      ],
+      "services": [],
+      "challenge": "This digital entertainment platform utilizes a multi-domain architecture that can be used",
+      "solution": "that can be used for various domains at different venues, hotels and lounges, in addition to providing",
+      "keyResults": [
+        {
+          "value": "$30",
+          "statement": "$30 million, supported by subscription fees and\nadvert"
+        }
+      ],
+      "tags": [
+        "Financial Services & Banking",
+        "React",
+        "MongoDB"
+      ],
+      "confidenceRating": "High",
+      "manualReviewFields": [
+        "services"
+      ],
+      "notes": "Requires admin review for: services"
+    },
+    {
+      "index": 36,
+      "filename": "Maal Bank Case Study.pdf",
+      "title": "Case Study: MaalBank MFB –",
+      "description": "Core Banking Application Industry",
+      "industry": "Financial Services & Banking",
+      "clientName": "Revenues\n12",
+      "clientCategory": "EXPLICIT_CLIENT",
+      "technologies": [
+        "Docker",
+        "Python",
+        "TypeScript",
+        "PostgreSQL",
+        "Microservices"
+      ],
+      "services": [],
+      "challenge": "Statement The client needed a fully digital, scalable, and compliant core banking system that",
+      "solution": "to ensure scalability ● Automated workflows for Murabaha (Islamic) financing and EMI management",
+      "keyResults": [
+        {
+          "value": "55%",
+          "statement": "55% through 24"
+        }
+      ],
+      "tags": [
+        "Financial Services & Banking",
+        "Docker",
+        "Python",
+        "TypeScript"
+      ],
+      "confidenceRating": "High",
+      "manualReviewFields": [
+        "services"
+      ],
+      "notes": "Requires admin review for: services"
+    },
+    {
+      "index": 37,
+      "filename": "Modernizing Infrastructure Operations Through Cloud-Native DevOps Transformation.pdf",
+      "title": "Modernizing Infrastructure Operations",
+      "description": "Eezyquest needed to transform its infrastructure from fragmented, manually-managed servers across multiple cloud providers into a unified, automated, and highly available cloud-native platform.",
+      "industry": "Software & Technology",
+      "clientName": "demands increased, manual server adminis",
+      "clientCategory": "EXPLICIT_CLIENT",
+      "technologies": [
+        "AWS",
+        "Docker",
+        "Kubernetes",
+        "Terraform",
+        "PostgreSQL",
+        "Microservices"
+      ],
+      "services": [],
+      "challenge": "but the operational, security, and reliability",
+      "solution": "Delivered by CISIN CISIN designed and deployed a three-layer cloud-native transformation architecture:",
+      "keyResults": [
+        {
+          "value": "10x",
+          "statement": "10x faster.\nBusiness Challenges\nFragmented infrastruct"
+        },
+        {
+          "value": "6 hours",
+          "statement": "6 hours and carried significant risk of downtime.\n\nLinux s"
+        },
+        {
+          "value": "60%",
+          "statement": "60% of engineering time on repetitive manual tasks\nSys"
+        },
+        {
+          "value": "60%",
+          "statement": "60% of their time\non manual operations to focusing on"
+        },
+        {
+          "value": "3 days",
+          "statement": "3 days to 15 minutes through infrastructure-\nas-code auto"
+        },
+        {
+          "value": "8\nhours",
+          "statement": "8\nhours to 15 minutes.\nSecurity posture strengthened acros"
+        }
+      ],
+      "tags": [
+        "Software & Technology",
+        "AWS",
+        "Docker",
+        "Kubernetes"
+      ],
+      "confidenceRating": "High",
+      "manualReviewFields": [
+        "services"
+      ],
+      "notes": "Requires admin review for: services"
+    },
+    {
+      "index": 38,
+      "filename": "Multi-Agent Orchestration for R&D Pipelines.pdf",
+      "title": "Multi-Agent Orchestration",
+      "description": "The organization operates in the advanced research and development (R&D) domain within the life sciences and smart materials sector. The R&D",
+      "industry": "Software & Technology",
+      "clientName": "Revenues\n12",
+      "clientCategory": "EXPLICIT_CLIENT",
+      "technologies": [
+        "Kubernetes",
+        "Python"
+      ],
+      "services": [],
+      "challenge": "for faster discovery required a more intelligent and integrated approach to",
+      "solution": "to managing complex research pipelines. ISO 2009:2015",
+      "keyResults": [
+        {
+          "value": "20%",
+          "statement": "20% of their weekly effort. Cross-functional collabora"
+        }
+      ],
+      "tags": [
+        "Software & Technology",
+        "Kubernetes",
+        "Python"
+      ],
+      "confidenceRating": "High",
+      "manualReviewFields": [
+        "services"
+      ],
+      "notes": "Requires admin review for: services"
+    },
+    {
+      "index": 39,
+      "filename": "NFT.pdf",
+      "title": "Exploring the Evolution of NFT",
+      "description": "The NFT Marketplace is a decentralized platform designed to",
+      "industry": "Financial Services & Banking",
+      "clientName": "Revenues\n12",
+      "clientCategory": "EXPLICIT_CLIENT",
+      "technologies": [
+        "React",
+        "PostgreSQL"
+      ],
+      "services": [],
+      "challenge": "The client faced multiple challenges with existing NFT platforms built predominantly on the",
+      "solution": "that allowed users to interact with NFTs on multiple EVM-based networks, including Ethereum and BSC,",
+      "keyResults": [],
+      "tags": [
+        "Financial Services & Banking",
+        "React",
+        "PostgreSQL"
+      ],
+      "confidenceRating": "Medium",
+      "manualReviewFields": [
+        "services",
+        "key_results"
+      ],
+      "notes": "Requires admin review for: services, key_results"
+    },
+    {
+      "index": 40,
+      "filename": "NexPay FinTech Platform.pdf",
+      "title": "How CIS Delivered a Bug-Free,",
+      "description": "Scalable Global Payments Platform to NexPay Enabling Seamless",
+      "industry": "Financial Services & Banking",
+      "clientName": "Revenues\n12",
+      "clientCategory": "EXPLICIT_CLIENT",
+      "technologies": [
+        "Azure"
+      ],
+      "services": [],
+      "challenge": null,
+      "solution": "that understood the unique needs of international education payments.",
+      "keyResults": [],
+      "tags": [
+        "Financial Services & Banking",
+        "Azure"
+      ],
+      "confidenceRating": "Medium",
+      "manualReviewFields": [
+        "services",
+        "challenge",
+        "key_results"
+      ],
+      "notes": "Requires admin review for: services, challenge, key_results"
+    },
+    {
+      "index": 41,
+      "filename": "Odoo ERP Implementation Real Estate Development & Construction.pdf",
+      "title": "Odoo ERP Implementation Real",
+      "description": "The client required a comprehensive Odoo ERP solution to manage",
+      "industry": "Financial Services & Banking",
+      "clientName": "Revenues\n12",
+      "clientCategory": "EXPLICIT_CLIENT",
+      "technologies": [
+        "AWS",
+        "Python",
+        "PostgreSQL",
+        "Odoo"
+      ],
+      "services": [],
+      "challenge": "Statement The client encountered several operational challenges:",
+      "solution": "to manage the complete lifecycle of residential and commercial real estate",
+      "keyResults": [
+        {
+          "value": "40%",
+          "statement": "40% improvement in project monitoring and visibility\n3"
+        },
+        {
+          "value": "0%",
+          "statement": "0% reduction in procurement processing time\n35"
+        },
+        {
+          "value": "25%",
+          "statement": "25% improvement in contractor payment processing\nReal-"
+        }
+      ],
+      "tags": [
+        "Financial Services & Banking",
+        "AWS",
+        "Python",
+        "PostgreSQL"
+      ],
+      "confidenceRating": "High",
+      "manualReviewFields": [
+        "services"
+      ],
+      "notes": "Requires admin review for: services"
+    },
+    {
+      "index": 42,
+      "filename": "Real-Time Fleet & Delivery Tracking Platform.pdf",
+      "title": "Real-Time Fleet & Delivery Tracking",
+      "description": null,
+      "industry": "Software & Technology",
+      "clientName": "Revenues\n12",
+      "clientCategory": "EXPLICIT_CLIENT",
+      "technologies": [
+        "AWS",
+        "Docker",
+        "Kubernetes",
+        "Python",
+        "PostgreSQL",
+        "Redis",
+        "REST API",
+        "Microservices"
+      ],
+      "services": [],
+      "challenge": "Statement Design and develop a scalable, real-time fleet tracking and delivery management system",
+      "solution": "that emphasizes map tile usage optimization,",
+      "keyResults": [
+        {
+          "value": "300%",
+          "statement": "300% Solution"
+        },
+        {
+          "value": "99.97%",
+          "statement": "99.97% uptime over 12 months of operation\n\nAverage API re"
+        },
+        {
+          "value": "200ms",
+          "statement": "200ms WebSocket latency"
+        },
+        {
+          "value": "150ms",
+          "statement": "150ms Technology Used\nFrontend Mapping"
+        }
+      ],
+      "tags": [
+        "Software & Technology",
+        "AWS",
+        "Docker",
+        "Kubernetes"
+      ],
+      "confidenceRating": "Medium",
+      "manualReviewFields": [
+        "description",
+        "services"
+      ],
+      "notes": "Requires admin review for: description, services"
+    },
+    {
+      "index": 43,
+      "filename": "Redefining Online Dating with _YBH_ dating app.pdf",
+      "title": "Redefining Online Dating with",
+      "description": "YBH is an online dating app designed to help build meaningful",
+      "industry": "Financial Services & Banking",
+      "clientName": "Revenues\n12",
+      "clientCategory": "EXPLICIT_CLIENT",
+      "technologies": [
+        "React",
+        "Node.js",
+        "React Native"
+      ],
+      "services": [],
+      "challenge": "YBH was faced with challenges when it came to maintaining customer engagement and",
+      "solution": "Eliminate the inconsistency and lack of relevant communication between the",
+      "keyResults": [
+        {
+          "value": "60%",
+          "statement": "60% in\ndaily interactions, as people were more motivat"
+        },
+        {
+          "value": "50%",
+          "statement": "50% which results in more satisfying and meaningful\nco"
+        },
+        {
+          "value": "70%",
+          "statement": "70% of users finding\nrelationship management tips usef"
+        },
+        {
+          "value": "35%",
+          "statement": "35% because those new\ntools addressed crucial requirem"
+        }
+      ],
+      "tags": [
+        "Financial Services & Banking",
+        "React",
+        "Node.js",
+        "React Native"
+      ],
+      "confidenceRating": "High",
+      "manualReviewFields": [
+        "services"
+      ],
+      "notes": "Requires admin review for: services"
+    },
+    {
+      "index": 44,
+      "filename": "Sas Kowloon Station Rail Infrastructure.pdf",
+      "title": "Case Study: Kowloon Station Rail",
+      "description": "Cyber Infrastructure's CAD Department successfully delivered a large-scale sheet",
+      "industry": "Financial Services & Banking",
+      "clientName": "Revenues\n12",
+      "clientCategory": "EXPLICIT_CLIENT",
+      "technologies": [],
+      "services": [],
+      "challenge": "About SAS International SAS International is a globally recognised specialist in the design, manufacture, and",
+      "solution": "was critical to meeting the 65-working-day timeline across such a high part count.",
+      "keyResults": [],
+      "tags": [
+        "Financial Services & Banking"
+      ],
+      "confidenceRating": "Medium",
+      "manualReviewFields": [
+        "technologies",
+        "services",
+        "key_results"
+      ],
+      "notes": "Requires admin review for: technologies, services, key_results"
+    },
+    {
+      "index": 45,
+      "filename": "Seafood Processing Case-Study.pdf",
+      "title": "Digitizing Time-Sensitive Seafood",
+      "description": "Processing with a Real-Time Custom ERP System Clients Testimonial",
+      "industry": "Manufacturing & Packaging",
+      "clientName": "Revenues\n12",
+      "clientCategory": "EXPLICIT_CLIENT",
+      "technologies": [
+        "AWS",
+        "Python",
+        "PostgreSQL",
+        "Odoo",
+        "REST API"
+      ],
+      "services": [],
+      "challenge": null,
+      "solution": "We built a full-scale, seafood-industry-specific ERP",
+      "keyResults": [],
+      "tags": [
+        "Manufacturing & Packaging",
+        "AWS",
+        "Python",
+        "PostgreSQL"
+      ],
+      "confidenceRating": "Medium",
+      "manualReviewFields": [
+        "services",
+        "challenge",
+        "key_results"
+      ],
+      "notes": "Requires admin review for: services, challenge, key_results"
+    },
+    {
+      "index": 46,
+      "filename": "Simplifying Surety Bond Management with Power Apps-Based Applications.pdf",
+      "title": "Simplifying Surety Bond",
+      "description": "The client is one of the top providers of surety bonds within the",
+      "industry": "Financial Services & Banking",
+      "clientName": "Revenues\n12",
+      "clientCategory": "EXPLICIT_CLIENT",
+      "technologies": [
+        "Power Apps",
+        "Power Automate"
+      ],
+      "services": [],
+      "challenge": "The client had to contend with huge inefficiencies using the traditional method of surety",
+      "solution": "that automates and streamlines the application process for surety bonds.",
+      "keyResults": [
+        {
+          "value": "$60",
+          "statement": "$60 billion\nmarket cap as of 2023 and roughly"
+        },
+        {
+          "value": "$20",
+          "statement": "$20 billion annual revenue. With a\nlong-standing track"
+        }
+      ],
+      "tags": [
+        "Financial Services & Banking",
+        "Power Apps",
+        "Power Automate"
+      ],
+      "confidenceRating": "High",
+      "manualReviewFields": [
+        "services"
+      ],
+      "notes": "Requires admin review for: services"
+    },
+    {
+      "index": 47,
+      "filename": "Student Registeration System.pdf",
+      "title": "Implementation of an Online",
+      "description": "The client is a renowned educational institution with an annual",
+      "industry": "Financial Services & Banking",
+      "clientName": "Revenues\n12",
+      "clientCategory": "EXPLICIT_CLIENT",
+      "technologies": [
+        "React",
+        "Node.js",
+        "MongoDB"
+      ],
+      "services": [],
+      "challenge": "Recently the client was experiencing problems with growth when they expanded their",
+      "solution": "was comprised of: User-friendly Interface",
+      "keyResults": [
+        {
+          "value": "$3.3",
+          "statement": "$3.3 billion, having approximately 24,000\nstudents. Wit"
+        },
+        {
+          "value": "40%",
+          "statement": "40% with\nstudents applauding the accessibility and the"
+        },
+        {
+          "value": "75%",
+          "statement": "75% which\nresulted in more precise and reliable studen"
+        }
+      ],
+      "tags": [
+        "Financial Services & Banking",
+        "React",
+        "Node.js",
+        "MongoDB"
+      ],
+      "confidenceRating": "High",
+      "manualReviewFields": [
+        "services"
+      ],
+      "notes": "Requires admin review for: services"
+    },
+    {
+      "index": 48,
+      "filename": "TalentSync - RPA-Based Employee Onboarding & Payroll Automation Platform.pdf",
+      "title": "TalentSync - RPA-Based Employee",
+      "description": "Onboarding & Payroll Automation Platform",
+      "industry": "Financial Services & Banking",
+      "clientName": "Revenues\n12",
+      "clientCategory": "EXPLICIT_CLIENT",
+      "technologies": [
+        "AWS",
+        "Docker",
+        "Python",
+        "PostgreSQL"
+      ],
+      "services": [],
+      "challenge": "Statement Build a scalable RPA system that can allow HR departments to automate repetitive",
+      "solution": "with both backend process orchestration and integration with enterprise systems",
+      "keyResults": [],
+      "tags": [
+        "Financial Services & Banking",
+        "AWS",
+        "Docker",
+        "Python"
+      ],
+      "confidenceRating": "Medium",
+      "manualReviewFields": [
+        "services",
+        "key_results"
+      ],
+      "notes": "Requires admin review for: services, key_results"
+    },
+    {
+      "index": 49,
+      "filename": "Tiryaq – All-in-One Digital Healthcare Platform.pdf",
+      "title": "Tiryaq – All-in-One Digital",
+      "description": "Tiryaq is a comprehensive electronic health platform designed to",
+      "industry": "Financial Services & Banking",
+      "clientName": "Revenues\n12",
+      "clientCategory": "EXPLICIT_CLIENT",
+      "technologies": [
+        "AWS",
+        "React",
+        "Node.js",
+        "PostgreSQL",
+        "MongoDB",
+        "Flutter",
+        "React Native"
+      ],
+      "services": [],
+      "challenge": "Statement Fragmented Healthcare Services :- Users depend on multiple apps for consultations,",
+      "solution": "that would enable: Online doctor consultations (video/audio/chat)",
+      "keyResults": [],
+      "tags": [
+        "Financial Services & Banking",
+        "AWS",
+        "React",
+        "Node.js"
+      ],
+      "confidenceRating": "Medium",
+      "manualReviewFields": [
+        "services",
+        "key_results"
+      ],
+      "notes": "Requires admin review for: services, key_results"
+    },
+    {
+      "index": 50,
+      "filename": "Transformation of Contract Management with a Power App-Based Contract Management System.pdf",
+      "title": "Transformation of Contract",
+      "description": "Dominion Energy is one of the top players in the energy industry",
+      "industry": "Financial Services & Banking",
+      "clientName": "Revenues\n12",
+      "clientCategory": "EXPLICIT_CLIENT",
+      "technologies": [
+        "Power Apps",
+        "Power Automate"
+      ],
+      "services": [],
+      "challenge": "Dominion Energy is one of the top players in the energy industry and is known for its",
+      "solution": "and suggested client to choose the Power App-based contract",
+      "keyResults": [
+        {
+          "value": "$57",
+          "statement": "$57 billion, the company serves electricity\nservices t"
+        },
+        {
+          "value": "$57",
+          "statement": "$57 billion, the company serves electricity services t"
+        }
+      ],
+      "tags": [
+        "Financial Services & Banking",
+        "Power Apps",
+        "Power Automate"
+      ],
+      "confidenceRating": "High",
+      "manualReviewFields": [
+        "services"
+      ],
+      "notes": "Requires admin review for: services"
+    },
+    {
+      "index": 51,
+      "filename": "Transforming Photography Engagement_ 60Seconds - Catch The Moment Success with an Integrated Social Networking Platform.pdf",
+      "title": "Transforming Photography",
+      "description": "Engagement: 60Seconds - Catch The Moment Success with an Integrated",
+      "industry": "Financial Services & Banking",
+      "clientName": "Revenues\n12",
+      "clientCategory": "EXPLICIT_CLIENT",
+      "technologies": [
+        "React",
+        "React Native"
+      ],
+      "services": [],
+      "challenge": "60Seconds - Catch The Moment is a dynamic social networking app that encourages",
+      "solution": "to social networking by merging spontaneous photo-sharing with real-world",
+      "keyResults": [
+        {
+          "value": "60Seconds",
+          "statement": "60Seconds - Catch The\nMoment Success with an Integrated\nSoci"
+        },
+        {
+          "value": "60Seconds",
+          "statement": "60Seconds - Catch The Moment offers a fresh approach to soci"
+        },
+        {
+          "value": "60Seconds",
+          "statement": "60Seconds provides users with a platform that\nencourages rea"
+        },
+        {
+          "value": "60Seconds",
+          "statement": "60Seconds - Catch The Moment is a creative\nentrepreneur with"
+        },
+        {
+          "value": "60Seconds",
+          "statement": "60Seconds is a growing player in\nthe photography and social"
+        },
+        {
+          "value": "70%",
+          "statement": "70% increase in active users and a 50"
+        }
+      ],
+      "tags": [
+        "Financial Services & Banking",
+        "React",
+        "React Native"
+      ],
+      "confidenceRating": "High",
+      "manualReviewFields": [
+        "services"
+      ],
+      "notes": "Requires admin review for: services"
+    },
+    {
+      "index": 52,
+      "filename": "UpChargers – Smart EV Charger Tracking System.pdf",
+      "title": "Case Study: UpChargers – Smart EV",
+      "description": "Charger Tracking System Industry",
+      "industry": "Software & Technology",
+      "clientName": "Revenues\n12",
+      "clientCategory": "EXPLICIT_CLIENT",
+      "technologies": [
+        "AWS",
+        "React",
+        "Python",
+        "PostgreSQL",
+        "Redis"
+      ],
+      "services": [],
+      "challenge": "Statement The client faced challenges in managing EV chargers and stations",
+      "solution": "Provided Our team developed UpChargers, a scalable GIS-enabled charger",
+      "keyResults": [
+        {
+          "value": "45%",
+          "statement": "45% improvement in charger utilization and near-instan"
+        }
+      ],
+      "tags": [
+        "Software & Technology",
+        "AWS",
+        "React",
+        "Python"
+      ],
+      "confidenceRating": "High",
+      "manualReviewFields": [
+        "services"
+      ],
+      "notes": "Requires admin review for: services"
+    },
+    {
+      "index": 53,
+      "filename": "Wahada_Bank.pdf",
+      "title": "Wahada Bank – Banking",
+      "description": "Wahada Bank is a Libyan banking organization managing multiple",
+      "industry": "Financial Services & Banking",
+      "clientName": "Revenues\n12",
+      "clientCategory": "EXPLICIT_CLIENT",
+      "technologies": [
+        "Python"
+      ],
+      "services": [],
+      "challenge": "Statement Wahada Bank was facing operational challenges due to fragmented systems",
+      "solution": "was designed to support complex banking workflows, improve operational efficiency, and provide",
+      "keyResults": [],
+      "tags": [
+        "Financial Services & Banking",
+        "Python"
+      ],
+      "confidenceRating": "Medium",
+      "manualReviewFields": [
+        "services",
+        "key_results"
+      ],
+      "notes": "Requires admin review for: services, key_results"
+    },
+    {
+      "index": 54,
+      "filename": "Web-Based Comprehensive Hospital Management Software.pdf",
+      "title": "Web-Based Comprehensive",
+      "description": "The client is a renowned healthcare provider in the region with",
+      "industry": "Financial Services & Banking",
+      "clientName": "Revenues\n12",
+      "clientCategory": "EXPLICIT_CLIENT",
+      "technologies": [
+        "React",
+        "Node.js",
+        "MongoDB"
+      ],
+      "services": [],
+      "challenge": "The Hospital was struggling with inefficient systems and manual processes that caused",
+      "solution": null,
+      "keyResults": [
+        {
+          "value": "$250",
+          "statement": "$250 million, known for its dedication to\nproviding top"
+        },
+        {
+          "value": "30%",
+          "statement": "30% while\nscheduling conflicts were lowered by 40 perc"
+        },
+        {
+          "value": "25%",
+          "statement": "25% improvement in efficiency.\nReduction of Administra"
+        },
+        {
+          "value": "35%",
+          "statement": "35% thanks to the automation of repetitive jobs.\nStrea"
+        }
+      ],
+      "tags": [
+        "Financial Services & Banking",
+        "React",
+        "Node.js",
+        "MongoDB"
+      ],
+      "confidenceRating": "Medium",
+      "manualReviewFields": [
+        "services",
+        "solution"
+      ],
+      "notes": "Requires admin review for: services, solution"
+    },
+    {
+      "index": 55,
+      "filename": "Web-Based Performance Testing Application for Car Wash Company.pdf",
+      "title": "Web-Based Performance Testing",
+      "description": "Application for Car Wash Company",
+      "industry": "Financial Services & Banking",
+      "clientName": "Revenues\n12",
+      "clientCategory": "EXPLICIT_CLIENT",
+      "technologies": [],
+      "services": [],
+      "challenge": null,
+      "solution": "to the existing issues with performance but also helped position the",
+      "keyResults": [
+        {
+          "value": "40%",
+          "statement": "40% of car wash businesses use software that has advan"
+        }
+      ],
+      "tags": [
+        "Financial Services & Banking"
+      ],
+      "confidenceRating": "Medium",
+      "manualReviewFields": [
+        "technologies",
+        "services",
+        "challenge"
+      ],
+      "notes": "Requires admin review for: technologies, services, challenge"
+    },
+    {
+      "index": 56,
+      "filename": "case-study-Boomi-Manufacturing.pdf",
+      "title": "Implementing Boomi iPaaS for Cloud",
+      "description": "A global manufacturing organization specializing in industrial",
+      "industry": "Financial Services & Banking",
+      "clientName": "Industry\n\nManufacturing\nClient",
+      "clientCategory": "EXPLICIT_CLIENT",
+      "technologies": [
+        "REST API"
+      ],
+      "services": [],
+      "challenge": "Existing Landscape: Salesforce CRM (Cloud) for Sales, Customer Data &",
+      "solution": "Approach: Boomi iPaaS Implementation Why Boomi iPaaS?Cloud-native with",
+      "keyResults": [
+        {
+          "value": "85%",
+          "statement": "85% Faster Order Processing\nQuote-to-order cycle reduc"
+        }
+      ],
+      "tags": [
+        "Financial Services & Banking",
+        "REST API"
+      ],
+      "confidenceRating": "High",
+      "manualReviewFields": [
+        "services"
+      ],
+      "notes": "Requires admin review for: services"
+    },
+    {
+      "index": 57,
+      "filename": "case-study-Boomi-healthcare.pdf",
+      "title": "Implementing Boomi iPaaS Platform",
+      "description": "for Seamless Workday and SAP Integration in a Healthcare",
+      "industry": "Financial Services & Banking",
+      "clientName": "Industry\n\nHealth & Wellness",
+      "clientCategory": "EXPLICIT_CLIENT",
+      "technologies": [],
+      "services": [],
+      "challenge": "A leading healthcare organization with 10,000+ employees operates",
+      "solution": "for HR operations, while continuing to rely on its on-premises SAP system",
+      "keyResults": [
+        {
+          "value": "80%",
+          "statement": "80% Data Accuracy\n98"
+        },
+        {
+          "value": "95%",
+          "statement": "95% Compliance\nBetter audit trail"
+        }
+      ],
+      "tags": [
+        "Financial Services & Banking"
+      ],
+      "confidenceRating": "Medium",
+      "manualReviewFields": [
+        "technologies",
+        "services"
+      ],
+      "notes": "Requires admin review for: technologies, services"
+    },
+    {
+      "index": 58,
+      "filename": "case-study-Coffee-selling.pdf",
+      "title": "Designing a Fresh Digital Experience",
+      "description": "Our client is a specialty coffee brand focused on freshly roasted beans",
+      "industry": "Financial Services & Banking",
+      "clientName": "Revenues\n12",
+      "clientCategory": "EXPLICIT_CLIENT",
+      "technologies": [],
+      "services": [],
+      "challenge": "The client needed a digital presence that effectively represented their premium coffee",
+      "solution": "Approach Refreshing Visual Identity: Cool tones,",
+      "keyResults": [],
+      "tags": [
+        "Financial Services & Banking"
+      ],
+      "confidenceRating": "Medium",
+      "manualReviewFields": [
+        "technologies",
+        "services",
+        "key_results"
+      ],
+      "notes": "Requires admin review for: technologies, services, key_results"
+    },
+    {
+      "index": 59,
+      "filename": "case-study-gate.pdf",
+      "title": "Implementing a Role-Based",
+      "description": "Vishal Pharma Pvt. Ltd. is a large-scale factory producing",
+      "industry": "Financial Services & Banking",
+      "clientName": "Revenues\n12",
+      "clientCategory": "EXPLICIT_CLIENT",
+      "technologies": [],
+      "services": [],
+      "challenge": "Manual record-keeping leads to unauthorized item movements, making it hard to track",
+      "solution": null,
+      "keyResults": [
+        {
+          "value": "80%",
+          "statement": "80% reduction in unauthorized item\nmovements.\nDigital"
+        },
+        {
+          "value": "3 days",
+          "statement": "3 days to\na few hours.\nDigital logs helped track accounta"
+        }
+      ],
+      "tags": [
+        "Financial Services & Banking"
+      ],
+      "confidenceRating": "Low",
+      "manualReviewFields": [
+        "technologies",
+        "services",
+        "solution",
+        "solution"
+      ],
+      "notes": "Requires admin review for: technologies, services, solution, solution"
+    },
+    {
+      "index": 60,
+      "filename": "liugong_india.pdf",
+      "title": "Liugong India – Manufacturing",
+      "description": "Liugong India is a manufacturing company managing multiple",
+      "industry": "Financial Services & Banking",
+      "clientName": "Revenues\n12",
+      "clientCategory": "EXPLICIT_CLIENT",
+      "technologies": [
+        "Python"
+      ],
+      "services": [],
+      "challenge": "Statement Liugong India was facing operational challenges due to fragmented systems",
+      "solution": "was designed to support complex manufacturing workflows, improve operational efficiency, and provide management with",
+      "keyResults": [],
+      "tags": [
+        "Financial Services & Banking",
+        "Python"
+      ],
+      "confidenceRating": "Medium",
+      "manualReviewFields": [
+        "services",
+        "key_results"
+      ],
+      "notes": "Requires admin review for: services, key_results"
+    },
+    {
+      "index": 61,
+      "filename": "ps_website_design.pdf",
+      "title": "PS Website Design Ltd – ERP",
+      "description": "PS Website Design Ltd is a UK-based ERP company managing",
+      "industry": "Financial Services & Banking",
+      "clientName": "Revenues\n12",
+      "clientCategory": "EXPLICIT_CLIENT",
+      "technologies": [
+        "Python"
+      ],
+      "services": [],
+      "challenge": "Statement PS Website Design Ltd was facing operational challenges due to fragmented",
+      "solution": "was designed to support complex service-industry workflows, improve operational efficiency, and provide management with",
+      "keyResults": [],
+      "tags": [
+        "Financial Services & Banking",
+        "Python"
+      ],
+      "confidenceRating": "Medium",
+      "manualReviewFields": [
+        "services",
+        "key_results"
+      ],
+      "notes": "Requires admin review for: services, key_results"
+    }
+  ]
+}

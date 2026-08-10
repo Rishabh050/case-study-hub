@@ -1,0 +1,20 @@
+{
+  "totalRecords": 177,
+  "publishedCount": 5,
+  "draftCount": 171,
+  "publishedFiles": [
+    "DevOps.pdf",
+    "AML-and-Fraud-Detection.pdf",
+    "ConsultNet.Online - A Telemedicine App That Provides Live Doctor Consultation Services‬.pdf",
+    "Amcor’s Global Packaging Case-Study.pdf",
+    "Case-Study-Self-Hosted Live Classroom Platform with LiveKit Infrastructure.pdf"
+  ],
+  "publishedSlugs": [
+    "aml-and-fraud-detection",
+    "amcor-s-global-packaging-case-study",
+    "case-study-self-hosted-live-classroom-platform-with-livekit-infrastructure",
+    "consultnet-online-a-telemedicine-app-that-provides-live-doctor-consultation-services",
+    "devops"
+  ],
+  "publicDraftIsolation": true
+}

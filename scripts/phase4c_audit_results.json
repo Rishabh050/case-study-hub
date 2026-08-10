@@ -1,0 +1,11 @@
+{
+  "supabaseAuthoritative": true,
+  "inMemoryFallbackPresent": true,
+  "productionFallbackRisk": false,
+  "recordsPersistedAfterRestart": true,
+  "b2KeysPersisted": true,
+  "metadataPersisted": true,
+  "adminAuth": "PASS",
+  "publicDraftIsolation": "PASS",
+  "secretsServerSide": "PASS"
+}

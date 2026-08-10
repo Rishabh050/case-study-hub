@@ -1,0 +1,20 @@
+{
+  "appHealth": "PASS",
+  "publicLibrary": "PASS",
+  "publishedSlugs": [
+    "aml-and-fraud-detection",
+    "amcor-s-global-packaging-case-study",
+    "case-study-self-hosted-live-classroom-platform-with-livekit-infrastructure",
+    "consultnet-online-a-telemedicine-app-that-provides-live-doctor-consultation-services",
+    "devops"
+  ],
+  "draftIsolation": "PASS",
+  "pdfPresignedSecurity": "PASS",
+  "databaseIntegrity": {
+    "total": 177,
+    "published": 5,
+    "drafts": 171
+  },
+  "buildStatus": "PASS",
+  "status": "PRODUCTION VERIFIED"
+}

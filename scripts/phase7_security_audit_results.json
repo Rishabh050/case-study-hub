@@ -1,0 +1,14 @@
+{
+  "authentication": "PASS",
+  "authorization": "PASS",
+  "apiSecurity": "PASS",
+  "supabaseSecurity": "PASS",
+  "envVariableSecurity": "PASS",
+  "backblazeB2Security": "PASS",
+  "publicPrivacy": "PASS",
+  "adminWorkflow": "PASS",
+  "inputValidation": "PASS",
+  "productionBuild": "PASS",
+  "deploymentConfig": "PASS",
+  "overallStatus": "READY FOR PRODUCTION"
+}
