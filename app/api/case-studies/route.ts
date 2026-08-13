@@ -1,8 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createAdminClient } from '@/lib/supabase/admin';
+import { connectToDatabase } from '@/lib/db/mongodb';
+import { CaseStudyModel } from '@/lib/models/CaseStudy';
 
-// In-memory fallback store when Supabase credentials are missing/placeholder
+import ALL_61_RECORDS from '@/scripts/all_61_published_records.json';
+
 export const mockDbStore = new Map<string, any>();
+
+if (mockDbStore.size === 0) {
+  ALL_61_RECORDS.forEach((item: any) => mockDbStore.set(item.id, item));
+}
+
 
 
 function slugify(text: string): string {
@@ -26,10 +33,16 @@ export async function GET(request: NextRequest) {
     const page = Math.max(1, parseInt(searchParams.get('page') || '1', 10));
     const limit = Math.max(1, Math.min(200, parseInt(searchParams.get('limit') || '12', 10)));
 
-    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+    let isDbConnected = true;
+    try {
+      await connectToDatabase();
+    } catch (err) {
+      console.warn('[API /api/case-studies GET] MongoDB unconfigured. Falling back to in-memory store.');
+      isDbConnected = false;
+    }
 
-    // Fallback mode if Supabase URL is unconfigured / placeholder
-    if (!supabaseUrl || supabaseUrl.includes('placeholder')) {
+    // In-memory fallback mode if MongoDB is unconfigured/offline
+    if (!isDbConnected) {
       let items = Array.from(mockDbStore.values());
 
       if (statusParam && statusParam !== 'all') {
@@ -78,99 +91,101 @@ export async function GET(request: NextRequest) {
       });
     }
 
-    const supabase = createAdminClient();
-
-    let dbQuery = supabase.from('case_studies').select('*', { count: 'exact' });
+    // Build MongoDB filter query
+    const filter: Record<string, any> = {};
 
     if (statusParam && statusParam !== 'all') {
-      dbQuery = dbQuery.eq('status', statusParam);
+      filter.status = statusParam;
     } else if (!statusParam) {
-      dbQuery = dbQuery.eq('status', 'published');
+      filter.status = 'published';
     }
 
     if (featuredOnly) {
-      dbQuery = dbQuery.eq('featured', true);
+      filter.featured = true;
     }
 
     if (industry) {
-      dbQuery = dbQuery.ilike('industry', industry);
+      filter.industry = new RegExp(`^${industry}$`, 'i');
     }
 
     if (technology) {
-      dbQuery = dbQuery.contains('technologies', [technology]);
+      filter.technologies = technology;
     }
 
     if (service) {
-      dbQuery = dbQuery.contains('services', [service]);
+      filter.services = service;
     }
 
     if (tag) {
-      dbQuery = dbQuery.contains('tags', [tag]);
+      filter.tags = tag;
     }
 
     if (query) {
-      dbQuery = dbQuery.or(
-        `title.ilike.%${query}%,description.ilike.%${query}%,industry.ilike.%${query}%,client_name.ilike.%${query}%,challenge.ilike.%${query}%,solution.ilike.%${query}%`
-      );
+      const qReg = new RegExp(query, 'i');
+      filter.$or = [
+        { title: qReg },
+        { description: qReg },
+        { industry: qReg },
+        { client_name: qReg },
+        { challenge: qReg },
+        { solution: qReg },
+        { technologies: qReg },
+        { services: qReg },
+        { tags: qReg },
+      ];
     }
 
+    // Sort order
+    let sortOptions: Record<string, any> = { created_at: -1 };
     switch (sort) {
       case 'oldest':
-        dbQuery = dbQuery.order('created_at', { ascending: true });
+        sortOptions = { created_at: 1 };
         break;
       case 'a-z':
-        dbQuery = dbQuery.order('title', { ascending: true });
+        sortOptions = { title: 1 };
         break;
       case 'featured':
-        dbQuery = dbQuery.order('featured', { ascending: false }).order('created_at', { ascending: false });
+        sortOptions = { featured: -1, created_at: -1 };
         break;
       case 'newest':
       default:
-        dbQuery = dbQuery.order('created_at', { ascending: false });
+        sortOptions = { created_at: -1 };
         break;
     }
 
-    const from = (page - 1) * limit;
-    const to = from + limit - 1;
-    dbQuery = dbQuery.range(from, to);
-
-    const { data, count, error } = await dbQuery;
-
-    if (error) {
-      console.error('[API /api/case-studies GET] Supabase error:', error);
-      return NextResponse.json({
-        data: [],
-        total: 0,
-        page,
-        limit,
-        totalPages: 0,
-        industries: [],
-        technologies: [],
-        services: [],
-        tags: [],
-      });
-    }
-
-    const items = data || [];
-    const total = count || 0;
+    const total = await CaseStudyModel.countDocuments(filter);
     const totalPages = Math.ceil(total / limit);
 
-    const { data: allRecords } = await supabase.from('case_studies').select('industry, technologies, services, tags');
+    const docs = await CaseStudyModel.find(filter)
+      .sort(sortOptions)
+      .skip((page - 1) * limit)
+      .limit(limit)
+      .lean();
+
+    const items = docs.map((d: any) => ({
+      ...d,
+      id: d._id.toString(),
+      _id: undefined,
+      __v: undefined,
+    }));
+
+    // Fetch aggregate facets
+    const allRecords = await CaseStudyModel.find({}, 'industry technologies services tags').lean();
 
     const industries = Array.from(
-      new Set((allRecords || []).map((r) => r.industry).filter(Boolean) as string[])
+      new Set(allRecords.map((r: any) => r.industry).filter(Boolean) as string[])
     ).sort();
 
     const technologies = Array.from(
-      new Set((allRecords || []).flatMap((r) => r.technologies || []))
+      new Set(allRecords.flatMap((r: any) => r.technologies || []))
     ).sort();
 
     const services = Array.from(
-      new Set((allRecords || []).flatMap((r) => r.services || []))
+      new Set(allRecords.flatMap((r: any) => r.services || []))
     ).sort();
 
     const tags = Array.from(
-      new Set((allRecords || []).flatMap((r) => r.tags || []))
+      new Set(allRecords.flatMap((r: any) => r.tags || []))
     ).sort();
 
     return NextResponse.json({
@@ -185,7 +200,7 @@ export async function GET(request: NextRequest) {
       tags,
     });
   } catch (err) {
-    console.error('[API /api/case-studies GET] Unexpected error:', err);
+    console.error('[API /api/case-studies GET] Error:', err);
     return NextResponse.json({
       data: [],
       total: 0,
@@ -203,7 +218,6 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
 
     const {
       title,
@@ -231,8 +245,15 @@ export async function POST(request: NextRequest) {
     let baseSlug = slugify(title);
     if (!baseSlug) baseSlug = `case-study-${Date.now()}`;
 
-    const newRecord = {
-      id: `cs-${Date.now()}-${Math.random().toString(36).substring(2, 7)}`,
+    let isDbConnected = true;
+    try {
+      await connectToDatabase();
+    } catch (err) {
+      console.warn('[API /api/case-studies POST] MongoDB unconfigured. Falling back to in-memory store.');
+      isDbConnected = false;
+    }
+
+    const payload = {
       title,
       slug: baseSlug,
       description: description || null,
@@ -250,51 +271,41 @@ export async function POST(request: NextRequest) {
       thumbnail_url: thumbnail_url || null,
       status: ['draft', 'published', 'archived'].includes(status) ? status : 'draft',
       featured: Boolean(featured),
-      created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString(),
       created_by: null,
     };
 
-    // Store in mock DB cache for dev fallback
-    mockDbStore.set(newRecord.id, newRecord);
-
-    // If Supabase URL is placeholder / unconfigured, return success with demo record
-    if (!supabaseUrl || supabaseUrl.includes('placeholder')) {
-      return NextResponse.json({ data: newRecord }, { status: 201 });
+    if (!isDbConnected) {
+      const mockRecord = {
+        ...payload,
+        id: `cs-${Date.now()}-${Math.random().toString(36).substring(2, 7)}`,
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
+      };
+      mockDbStore.set(mockRecord.id, mockRecord);
+      return NextResponse.json({ data: mockRecord }, { status: 201 });
     }
-
-    const supabase = createAdminClient();
 
     let finalSlug = baseSlug;
     let counter = 1;
     while (true) {
-      const { data: existing } = await supabase
-        .from('case_studies')
-        .select('id')
-        .eq('slug', finalSlug)
-        .maybeSingle();
-
+      const existing = await CaseStudyModel.findOne({ slug: finalSlug });
       if (!existing) break;
       finalSlug = `${baseSlug}-${counter++}`;
     }
 
-    const dbInsertPayload = { ...newRecord, slug: finalSlug };
-    delete (dbInsertPayload as any).id;
+    const created = await CaseStudyModel.create({
+      ...payload,
+      slug: finalSlug,
+    });
 
-    const { data, error } = await supabase
-      .from('case_studies')
-      .insert(dbInsertPayload)
-      .select()
-      .single();
+    const result = created.toObject();
 
-    if (error) {
-      console.error('[API /api/case-studies POST] Insert error:', error);
-      return NextResponse.json({ data: { ...newRecord, slug: finalSlug } }, { status: 201 });
-    }
+    // Cache in mock store for seamless dev fallback
+    mockDbStore.set(result.id, result);
 
-    return NextResponse.json({ data }, { status: 201 });
+    return NextResponse.json({ data: result }, { status: 201 });
   } catch (err: any) {
-    console.error('[API /api/case-studies POST] Unexpected error:', err);
+    console.error('[API /api/case-studies POST] Error:', err);
     return NextResponse.json({ error: err.message || 'Server error' }, { status: 500 });
   }
 }

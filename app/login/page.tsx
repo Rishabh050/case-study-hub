@@ -2,8 +2,8 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { createClient } from '@/lib/supabase/client';
 import { BookOpen, ShieldCheck, ArrowRight, Lock } from 'lucide-react';
+
 
 export default function LoginPage() {
   const router = useRouter();
@@ -18,15 +18,16 @@ export default function LoginPage() {
     setErrorMsg(null);
 
     try {
-      const supabase = createClient();
-      const { error } = await supabase.auth.signInWithPassword({
-        email,
-        password,
+      const res = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password }),
       });
 
-      if (error) {
-        // If Supabase credentials are not connected or auth fails, gracefully explain
-        setErrorMsg(error.message || 'Failed to authenticate.');
+      const data = await res.json();
+
+      if (!res.ok || data.error) {
+        setErrorMsg(data.error || 'Failed to authenticate.');
       } else {
         router.push('/admin');
       }
@@ -36,6 +37,7 @@ export default function LoginPage() {
       setLoading(false);
     }
   };
+
 
   return (
     <div className="min-h-[calc(100vh-4rem)] bg-slate-50 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
@@ -104,9 +106,10 @@ export default function LoginPage() {
 
         <div className="pt-4 border-t border-gray-100 text-center">
           <p className="text-xs text-gray-500">
-            Protected by Supabase Row Level Security. Service keys remain strictly on the backend.
+            Protected by MongoDB Server Security & JWT HTTP-Only Cookies. Database credentials remain strictly on the backend.
           </p>
         </div>
+
       </div>
     </div>
   );

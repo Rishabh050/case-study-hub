@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import {
   UploadCloud,
@@ -8,7 +8,6 @@ import {
   Sparkles,
   FileText,
   AlertCircle,
-  Save,
   ArrowRight,
   Plus,
   Trash2,
@@ -18,7 +17,8 @@ import {
   Layers,
   Tag,
 } from 'lucide-react';
-import { AIMetadataExtractionResult, KeyResultItem } from '@/lib/types/case-study';
+import { KeyResultItem } from '@/lib/types/case-study';
+import { isValidTitle } from '@/lib/pdf/extractor';
 
 type Step = 1 | 2 | 3 | 4;
 
@@ -31,6 +31,7 @@ export default function NewCaseStudyPage() {
   const [isDragOver, setIsDragOver] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const [textExtractionWarning, setTextExtractionWarning] = useState<string | null>(null);
 
   // Uploaded PDF info
   const [pdfFileName, setPdfFileName] = useState('');
@@ -41,28 +42,129 @@ export default function NewCaseStudyPage() {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [industry, setIndustry] = useState('');
+  const [subIndustry, setSubIndustry] = useState('');
+  const [projectType, setProjectType] = useState('');
+  const [geography, setGeography] = useState('');
   const [clientName, setClientName] = useState('');
   const [challenge, setChallenge] = useState('');
   const [solution, setSolution] = useState('');
   const [technologiesInput, setTechnologiesInput] = useState('');
   const [servicesInput, setServicesInput] = useState('');
   const [tagsInput, setTagsInput] = useState('');
+  const [businessOutcomesInput, setBusinessOutcomesInput] = useState('');
   const [keyResults, setKeyResults] = useState<KeyResultItem[]>([]);
   const [featured, setFeatured] = useState(false);
   const [confidenceNotes, setConfidenceNotes] = useState<string | undefined>(undefined);
 
-  // Step 1: File Validation & Drop
+  // Clear Form State between uploads
+  const resetFormState = () => {
+    setTitle('');
+    setDescription('');
+    setIndustry('');
+    setSubIndustry('');
+    setProjectType('');
+    setGeography('');
+    setClientName('');
+    setChallenge('');
+    setSolution('');
+    setTechnologiesInput('');
+    setServicesInput('');
+    setTagsInput('');
+    setBusinessOutcomesInput('');
+    setKeyResults([]);
+    setFeatured(false);
+    setConfidenceNotes(undefined);
+    setTextExtractionWarning(null);
+  };
+
+  // Step 1: File Selection & Validation
   const handleFileSelect = (file: File) => {
     setErrorMsg(null);
     if (file.type !== 'application/pdf' && !file.name.toLowerCase().endsWith('.pdf')) {
       setErrorMsg('Invalid file format. Please select a PDF document.');
       return;
     }
-    if (file.size > 25 * 1024 * 1024) {
-      setErrorMsg('File exceeds maximum size limit of 25MB.');
+    if (file.size > 100 * 1024 * 1024) {
+      setErrorMsg('File exceeds maximum size limit of 100MB.');
       return;
     }
+    resetFormState();
     setSelectedFile(file);
+
+    console.log('=== REAL FLOW STEP 1 FILE ===', {
+      name: file.name,
+      sizeBytes: file.size,
+      type: file.type,
+    });
+  };
+
+  // Canonical Form Mapping Function
+  const applyExtractedMetadataToForm = (meta: any, fallbackFileName: string) => {
+    console.log('=== REAL FLOW STEP 7 NORMALIZED METADATA ===', meta);
+
+    const isTouchFallback = typeof meta?.title === 'string' && meta.title.toLowerCase().startsWith('touch case study');
+
+    const titleCandidate = typeof meta?.title === 'string' ? meta.title.trim() : '';
+    const cleanTitle = (isValidTitle(titleCandidate) && !isTouchFallback)
+      ? titleCandidate
+      : fallbackFileName.replace(/\.pdf$/i, '').replace(/[-_]/g, ' ');
+
+    const cleanDescription = typeof meta?.description === 'string' && meta.description.trim()
+      ? meta.description.trim()
+      : (typeof meta?.executiveSummary === 'string' && meta.executiveSummary.trim() ? meta.executiveSummary.trim() : (meta?.challenge || ''));
+
+    const cleanIndustry = typeof meta?.industry === 'string' ? meta.industry.trim() : '';
+    const cleanSubIndustry = typeof meta?.subIndustry === 'string' ? meta.subIndustry.trim() : (typeof meta?.sub_industry === 'string' ? meta.sub_industry.trim() : '');
+    const cleanProjectType = typeof meta?.projectType === 'string' ? meta.projectType.trim() : (typeof meta?.project_type === 'string' ? meta.project_type.trim() : '');
+    const cleanGeography = typeof meta?.geography === 'string' ? meta.geography.trim() : '';
+    const cleanClientName = typeof meta?.client === 'string' && meta.client.trim() ? meta.client.trim() : (typeof meta?.client_name === 'string' ? meta.client_name.trim() : '');
+    const cleanChallenge = typeof meta?.challenge === 'string' ? meta.challenge.trim() : '';
+    const cleanSolution = typeof meta?.solution === 'string' ? meta.solution.trim() : '';
+
+    const techArray = Array.isArray(meta?.technologies) ? meta.technologies.map((t: any) => String(t).trim()).filter(Boolean) : [];
+    const servArray = Array.isArray(meta?.services) ? meta.services.map((s: any) => String(s).trim()).filter(Boolean) : [];
+    const tagsArray = Array.isArray(meta?.tags) ? meta.tags.map((t: any) => String(t).trim()).filter(Boolean) : [];
+    const outcomesArray = Array.isArray(meta?.businessOutcomes)
+      ? meta.businessOutcomes.map((b: any) => String(b).trim()).filter(Boolean)
+      : (Array.isArray(meta?.business_outcomes) ? meta.business_outcomes.map((b: any) => String(b).trim()).filter(Boolean) : []);
+
+    const rawKeyResults = Array.isArray(meta?.keyResults) ? meta.keyResults : (Array.isArray(meta?.key_results) ? meta.key_results : []);
+    const cleanKeyResults: KeyResultItem[] = rawKeyResults.map((k: any) => ({
+      metric: typeof k.metric === 'string' ? k.metric.trim() : '',
+      value: typeof k.value === 'string' ? k.value.trim() : '',
+      statement: typeof k.statement === 'string' && k.statement.trim() ? k.statement.trim() : (typeof k.description === 'string' ? k.description.trim() : ''),
+    }));
+
+    console.log('=== REAL FLOW STEP 8 FORM STATE ===', {
+      title: cleanTitle,
+      clientName: cleanClientName,
+      description: cleanDescription,
+      industry: cleanIndustry,
+      subIndustry: cleanSubIndustry,
+      projectType: cleanProjectType,
+      geography: cleanGeography,
+      technologiesCount: techArray.length,
+      servicesCount: servArray.length,
+      tagsCount: tagsArray.length,
+      businessOutcomesCount: outcomesArray.length,
+      keyResultsCount: cleanKeyResults.length,
+    });
+
+    setTitle(cleanTitle);
+    setDescription(cleanDescription);
+    setIndustry(cleanIndustry);
+    setSubIndustry(cleanSubIndustry);
+    setProjectType(cleanProjectType);
+    setGeography(cleanGeography);
+    setClientName(cleanClientName);
+    setChallenge(cleanChallenge);
+    setSolution(cleanSolution);
+    setTechnologiesInput(techArray.join(', '));
+    setServicesInput(servArray.join(', '));
+    setTagsInput(tagsArray.join(', '));
+    setBusinessOutcomesInput(outcomesArray.join('\n'));
+    setKeyResults(cleanKeyResults);
+    if (meta?.confidence_notes) setConfidenceNotes(meta.confidence_notes);
   };
 
   // Step 2 & 3: Upload to B2 -> Extract Text -> Run AI Extraction
@@ -70,9 +172,12 @@ export default function NewCaseStudyPage() {
     if (!selectedFile) return;
     setLoading(true);
     setErrorMsg(null);
+    resetFormState();
     setCurrentStep(2);
 
     try {
+      console.log('=== REAL FLOW STEP 2 UPLOAD REQUEST ===', { fileName: selectedFile.name, size: selectedFile.size });
+
       // 1. Upload PDF & Extract Text via Server API
       const formData = new FormData();
       formData.append('file', selectedFile);
@@ -82,46 +187,68 @@ export default function NewCaseStudyPage() {
         body: formData,
       });
 
+      const uploadData = await uploadRes.json().catch(() => ({}));
+
+      console.log('=== REAL FLOW STEP 3 UPLOAD RESPONSE ===', {
+        status: uploadRes.status,
+        pdfFileName: uploadData.pdfFileName,
+        storageKey: uploadData.storageKey,
+        extractedTextLength: (uploadData.extractedText || '').length,
+        hasExtractableText: uploadData.hasExtractableText,
+      });
+
       if (!uploadRes.ok) {
-        const errJson = await uploadRes.json();
-        throw new Error(errJson.error || 'Failed to upload PDF to Backblaze B2.');
+        throw new Error(uploadData.error || 'Failed to upload PDF to Backblaze B2.');
       }
 
-      const uploadData = await uploadRes.json();
       setPdfFileName(uploadData.pdfFileName);
       setPdfStorageKey(uploadData.storageKey);
       setExtractedText(uploadData.extractedText || '');
 
+      console.log('=== REAL FLOW STEP 4 EXTRACTED TEXT ===', {
+        length: (uploadData.extractedText || '').length,
+        first500Chars: (uploadData.extractedText || '').slice(0, 500),
+      });
+
+      if (!uploadData.extractedText || uploadData.extractedText.trim().length < 30) {
+        setTextExtractionWarning(
+          'Notice: This PDF contains little or no extractable text (it may be a scanned image or empty document). Please manually enter the metadata fields below.'
+        );
+      }
+
       // 2. Trigger AI Metadata Extraction
       setCurrentStep(3);
+      console.log('=== REAL FLOW STEP 5 AI REQUEST ===', {
+        fileName: uploadData.pdfFileName,
+        textLength: (uploadData.extractedText || '').length,
+      });
+
       const aiRes = await fetch('/api/ai/extract-metadata', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          text: uploadData.extractedText,
+          text: uploadData.extractedText || '',
           fileName: uploadData.pdfFileName,
         }),
       });
 
+      const aiData = await aiRes.json().catch(() => ({}));
+
+      console.log('=== REAL FLOW STEP 6 AI RESPONSE ===', {
+        status: aiRes.status,
+        success: aiData.success,
+        keys: Object.keys(aiData),
+      });
+
       if (!aiRes.ok) {
-        throw new Error('Failed to run AI metadata extraction.');
+        throw new Error(aiData.error || 'Failed to run AI metadata extraction.');
       }
 
-      const aiData = await aiRes.json();
-      const meta: AIMetadataExtractionResult = aiData.metadata;
+      // Canonical metadata extraction object
+      const meta = aiData?.metadata ?? aiData?.response?.metadata ?? aiData?.data?.metadata ?? aiData ?? {};
 
-      // Populate editable form state
-      setTitle(meta.title || uploadData.pdfFileName.replace(/\.pdf$/i, ''));
-      setDescription(meta.description || '');
-      setIndustry(meta.industry || '');
-      setClientName(meta.client_name || '');
-      setChallenge(meta.challenge || '');
-      setSolution(meta.solution || '');
-      setTechnologiesInput((meta.technologies || []).join(', '));
-      setServicesInput((meta.services || []).join(', '));
-      setTagsInput((meta.tags || []).join(', '));
-      setKeyResults(meta.key_results || []);
-      setConfidenceNotes(meta.confidence_notes);
+      // Apply metadata to form state
+      applyExtractedMetadataToForm(meta, uploadData.pdfFileName);
 
       // Advance to Admin Review step
       setCurrentStep(4);
@@ -132,6 +259,25 @@ export default function NewCaseStudyPage() {
       setLoading(false);
     }
   };
+
+  // Inspect rendered DOM values after step 4 transition
+  useEffect(() => {
+    if (currentStep === 4) {
+      const timer = setTimeout(() => {
+        console.log('=== REAL FLOW STEP 9 DOM VALUES ===', {
+          titleDOM: (document.querySelector('input[name="title"]') as HTMLInputElement)?.value,
+          clientNameDOM: (document.querySelector('input[name="clientName"]') as HTMLInputElement)?.value,
+          industryDOM: (document.querySelector('input[name="industry"]') as HTMLInputElement)?.value,
+          projectTypeDOM: (document.querySelector('input[name="projectType"]') as HTMLInputElement)?.value,
+          technologiesInputDOM: (document.querySelector('input[name="technologiesInput"]') as HTMLInputElement)?.value,
+          servicesInputDOM: (document.querySelector('input[name="servicesInput"]') as HTMLInputElement)?.value,
+          tagsInputDOM: (document.querySelector('input[name="tagsInput"]') as HTMLInputElement)?.value,
+          businessOutcomesInputDOM: (document.querySelector('textarea[name="businessOutcomesInput"]') as HTMLTextAreaElement)?.value,
+        });
+      }, 150);
+      return () => clearTimeout(timer);
+    }
+  }, [currentStep, title, clientName, industry, projectType, technologiesInput]);
 
   // Helper for key results management
   const addKeyResult = () => {
@@ -166,17 +312,25 @@ export default function NewCaseStudyPage() {
         .split(',')
         .map((s) => s.trim())
         .filter(Boolean);
+      const business_outcomes = businessOutcomesInput
+        .split('\n')
+        .map((s) => s.trim())
+        .filter(Boolean);
 
       const payload = {
         title,
         description,
         industry,
+        sub_industry: subIndustry,
+        project_type: projectType,
+        geography,
         client_name: clientName,
         challenge,
         solution,
         technologies,
         services,
         tags,
+        business_outcomes,
         key_results: keyResults.filter((k) => k.statement.trim().length > 0),
         pdf_file_name: pdfFileName,
         pdf_storage_key: pdfStorageKey,
@@ -272,7 +426,7 @@ export default function NewCaseStudyPage() {
               <h3 className="text-base font-bold text-gray-900">
                 Drag and drop your case study PDF here
               </h3>
-              <p className="text-xs text-gray-500 mt-1">Accepts standard PDF documents up to 25MB</p>
+              <p className="text-xs text-gray-500 mt-1">Accepts standard PDF documents up to 100MB</p>
 
               <div className="mt-4">
                 <label className="inline-flex items-center px-4 py-2 bg-white border border-gray-300 text-gray-700 font-semibold text-xs rounded-lg hover:bg-gray-50 cursor-pointer shadow-sm">
@@ -337,6 +491,11 @@ export default function NewCaseStudyPage() {
                 <p className="text-xs text-amber-800 mt-0.5 leading-relaxed">
                   Verify and edit the proposed metadata below. AI outputs are never published automatically. Once satisfied, click "Save as Draft" or "Publish".
                 </p>
+                {textExtractionWarning && (
+                  <p className="text-xs font-semibold text-amber-800 mt-2 bg-amber-100 p-2.5 rounded-lg border border-amber-200">
+                    {textExtractionWarning}
+                  </p>
+                )}
                 {confidenceNotes && (
                   <p className="text-[11px] font-mono text-amber-700 mt-2 bg-amber-100/50 p-2 rounded">
                     {confidenceNotes}
@@ -355,9 +514,12 @@ export default function NewCaseStudyPage() {
                   </label>
                   <input
                     type="text"
+                    name="title"
+                    id="title"
                     required
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
+                    placeholder="Enter case study title"
                     className="w-full px-3.5 py-2.5 bg-gray-50 border border-gray-300 rounded-lg text-sm text-gray-900 font-bold focus:bg-white focus:ring-2 focus:ring-blue-500"
                   />
                 </div>
@@ -368,6 +530,8 @@ export default function NewCaseStudyPage() {
                   </label>
                   <input
                     type="text"
+                    name="clientName"
+                    id="clientName"
                     value={clientName}
                     onChange={(e) => setClientName(e.target.value)}
                     placeholder="e.g. Acme Corp"
@@ -383,14 +547,17 @@ export default function NewCaseStudyPage() {
                 </label>
                 <textarea
                   rows={3}
+                  name="description"
+                  id="description"
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
+                  placeholder="Enter executive summary or overview"
                   className="w-full px-3.5 py-2.5 bg-gray-50 border border-gray-300 rounded-lg text-sm text-gray-900 focus:bg-white focus:ring-2 focus:ring-blue-500"
                 />
               </div>
 
-              {/* Industry & Badges Inputs */}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {/* Industry, Sub-Industry, Project Type, Geography */}
+              <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
                 <div>
                   <label className="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1 flex items-center space-x-1">
                     <Building2 className="w-3.5 h-3.5 text-blue-600" />
@@ -398,13 +565,63 @@ export default function NewCaseStudyPage() {
                   </label>
                   <input
                     type="text"
+                    name="industry"
+                    id="industry"
                     value={industry}
                     onChange={(e) => setIndustry(e.target.value)}
-                    placeholder="e.g. Healthcare, Retail"
+                    placeholder="e.g. Software & Cloud Technology"
                     className="w-full px-3.5 py-2.5 bg-gray-50 border border-gray-300 rounded-lg text-sm text-gray-900 focus:bg-white focus:ring-2 focus:ring-blue-500"
                   />
                 </div>
 
+                <div>
+                  <label className="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1">
+                    Sub-Industry
+                  </label>
+                  <input
+                    type="text"
+                    name="subIndustry"
+                    id="subIndustry"
+                    value={subIndustry}
+                    onChange={(e) => setSubIndustry(e.target.value)}
+                    placeholder="e.g. Cloud Infrastructure"
+                    className="w-full px-3.5 py-2.5 bg-gray-50 border border-gray-300 rounded-lg text-sm text-gray-900 focus:bg-white focus:ring-2 focus:ring-blue-500"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1">
+                    Project Type
+                  </label>
+                  <input
+                    type="text"
+                    name="projectType"
+                    id="projectType"
+                    value={projectType}
+                    onChange={(e) => setProjectType(e.target.value)}
+                    placeholder="e.g. Enterprise Solution"
+                    className="w-full px-3.5 py-2.5 bg-gray-50 border border-gray-300 rounded-lg text-sm text-gray-900 focus:bg-white focus:ring-2 focus:ring-blue-500"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1">
+                    Geography
+                  </label>
+                  <input
+                    type="text"
+                    name="geography"
+                    id="geography"
+                    value={geography}
+                    onChange={(e) => setGeography(e.target.value)}
+                    placeholder="e.g. North America, Global"
+                    className="w-full px-3.5 py-2.5 bg-gray-50 border border-gray-300 rounded-lg text-sm text-gray-900 focus:bg-white focus:ring-2 focus:ring-blue-500"
+                  />
+                </div>
+              </div>
+
+              {/* Technologies & Services */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                   <label className="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1 flex items-center space-x-1">
                     <Cpu className="w-3.5 h-3.5 text-blue-600" />
@@ -412,6 +629,8 @@ export default function NewCaseStudyPage() {
                   </label>
                   <input
                     type="text"
+                    name="technologiesInput"
+                    id="technologiesInput"
                     value={technologiesInput}
                     onChange={(e) => setTechnologiesInput(e.target.value)}
                     placeholder="AWS, Next.js, PostgreSQL"
@@ -426,6 +645,8 @@ export default function NewCaseStudyPage() {
                   </label>
                   <input
                     type="text"
+                    name="servicesInput"
+                    id="servicesInput"
                     value={servicesInput}
                     onChange={(e) => setServicesInput(e.target.value)}
                     placeholder="Cloud Migration, Analytics"
@@ -434,19 +655,39 @@ export default function NewCaseStudyPage() {
                 </div>
               </div>
 
-              {/* Tags Input */}
-              <div>
-                <label className="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1 flex items-center space-x-1">
-                  <Tag className="w-3.5 h-3.5 text-amber-600" />
-                  <span>Tags (Comma Separated)</span>
-                </label>
-                <input
-                  type="text"
-                  value={tagsInput}
-                  onChange={(e) => setTagsInput(e.target.value)}
-                  placeholder="Enterprise, High-Scale, Microservices"
-                  className="w-full px-3.5 py-2.5 bg-gray-50 border border-gray-300 rounded-lg text-sm text-gray-900 focus:bg-white focus:ring-2 focus:ring-blue-500"
-                />
+              {/* Tags & Business Outcomes */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <label className="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1 flex items-center space-x-1">
+                    <Tag className="w-3.5 h-3.5 text-amber-600" />
+                    <span>Tags (Comma Separated)</span>
+                  </label>
+                  <input
+                    type="text"
+                    name="tagsInput"
+                    id="tagsInput"
+                    value={tagsInput}
+                    onChange={(e) => setTagsInput(e.target.value)}
+                    placeholder="Enterprise, High-Scale, Microservices"
+                    className="w-full px-3.5 py-2.5 bg-gray-50 border border-gray-300 rounded-lg text-sm text-gray-900 focus:bg-white focus:ring-2 focus:ring-blue-500"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1 flex items-center space-x-1">
+                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
+                    <span>Business Outcomes (One Per Line)</span>
+                  </label>
+                  <textarea
+                    rows={3}
+                    name="businessOutcomesInput"
+                    id="businessOutcomesInput"
+                    value={businessOutcomesInput}
+                    onChange={(e) => setBusinessOutcomesInput(e.target.value)}
+                    placeholder="Enter business outcomes (one per line)"
+                    className="w-full px-3.5 py-2 bg-gray-50 border border-gray-300 rounded-lg text-xs text-gray-900 focus:bg-white focus:ring-2 focus:ring-blue-500"
+                  />
+                </div>
               </div>
 
               {/* Challenge & Solution */}
@@ -457,8 +698,11 @@ export default function NewCaseStudyPage() {
                   </label>
                   <textarea
                     rows={4}
+                    name="challenge"
+                    id="challenge"
                     value={challenge}
                     onChange={(e) => setChallenge(e.target.value)}
+                    placeholder="Enter problem statement or key challenges"
                     className="w-full px-3.5 py-2.5 bg-gray-50 border border-gray-300 rounded-lg text-sm text-gray-900 focus:bg-white focus:ring-2 focus:ring-blue-500"
                   />
                 </div>
@@ -469,8 +713,11 @@ export default function NewCaseStudyPage() {
                   </label>
                   <textarea
                     rows={4}
+                    name="solution"
+                    id="solution"
                     value={solution}
                     onChange={(e) => setSolution(e.target.value)}
+                    placeholder="Enter implementation details or architecture"
                     className="w-full px-3.5 py-2.5 bg-gray-50 border border-gray-300 rounded-lg text-sm text-gray-900 focus:bg-white focus:ring-2 focus:ring-blue-500"
                   />
                 </div>
@@ -526,6 +773,7 @@ export default function NewCaseStudyPage() {
                 <input
                   type="checkbox"
                   id="featured"
+                  name="featured"
                   checked={featured}
                   onChange={(e) => setFeatured(e.target.checked)}
                   className="w-4 h-4 text-blue-600 rounded border-gray-300 focus:ring-blue-500"
@@ -540,7 +788,11 @@ export default function NewCaseStudyPage() {
             <div className="flex items-center justify-between pt-4">
               <button
                 type="button"
-                onClick={() => setCurrentStep(1)}
+                onClick={() => {
+                  resetFormState();
+                  setSelectedFile(null);
+                  setCurrentStep(1);
+                }}
                 className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50"
               >
                 Change PDF File

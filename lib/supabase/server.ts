@@ -1,30 +1,7 @@
-import { createServerClient } from '@supabase/ssr';
-import { cookies } from 'next/headers';
-
-export async function createServerSupabaseClient() {
-  const cookieStore = await cookies();
-
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-
-  return createServerClient(
-    supabaseUrl || 'https://placeholder.supabase.co',
-    supabaseAnonKey || 'placeholder-key',
-    {
-      cookies: {
-        getAll() {
-          return cookieStore.getAll();
-        },
-        setAll(cookiesToSet) {
-          try {
-            cookiesToSet.forEach(({ name, value, options }) =>
-              cookieStore.set(name, value, options)
-            );
-          } catch {
-            // Called from Server Component context, ignored
-          }
-        },
-      },
-    }
-  );
+/**
+ * Legacy Supabase server client placeholder.
+ * Database operations now use MongoDB Mongoose via lib/db/mongodb.ts.
+ */
+export function createServerClient() {
+  throw new Error('Supabase client has been migrated to MongoDB. Use connectToDatabase() from lib/db/mongodb.ts.');
 }

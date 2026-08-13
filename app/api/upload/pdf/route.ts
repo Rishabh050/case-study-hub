@@ -23,7 +23,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Validate size limit (Increased to 100MB to support large technical PDFs like Ad-Tech)
+    // Validate size limit (100MB)
     const MAX_SIZE_BYTES = 100 * 1024 * 1024;
     if (file.size > MAX_SIZE_BYTES) {
       return NextResponse.json(
@@ -38,8 +38,14 @@ export async function POST(request: NextRequest) {
     // 1. Server-side upload to Backblaze B2
     const { storageKey } = await uploadFile(buffer, file.name, 'application/pdf');
 
-    // 2. Server-side PDF text extraction
-    const pdfExtraction = await extractTextFromPDF(buffer);
+    // 2. Server-side PDF text extraction (pass file.name)
+    const pdfExtraction = await extractTextFromPDF(buffer, file.name);
+
+    console.log('PDF EXTRACTION RUNTIME CHECK', {
+      fileName: file.name,
+      textLength: pdfExtraction.text.length,
+      first500Characters: pdfExtraction.text.slice(0, 500),
+    });
 
     return NextResponse.json({
       success: true,

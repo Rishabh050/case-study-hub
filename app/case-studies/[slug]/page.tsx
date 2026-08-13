@@ -237,6 +237,33 @@ export default function CaseStudyDetailPage({ params }: { params: Promise<{ slug
                 Metadata Breakdown
               </h3>
 
+              {/* Industry & Sub-Industry */}
+              <div>
+                <label className="text-xs font-bold text-gray-500 uppercase tracking-wider flex items-center space-x-1.5 mb-1.5">
+                  <Building2 className="w-3.5 h-3.5 text-blue-600" />
+                  <span>Industry</span>
+                </label>
+                <div className="text-sm font-semibold text-gray-900">
+                  {caseStudy.industry || 'Information Technology'}
+                  {caseStudy.sub_industry && (
+                    <span className="block text-xs font-normal text-gray-500 mt-0.5">{caseStudy.sub_industry}</span>
+                  )}
+                </div>
+              </div>
+
+              {/* Project Type */}
+              {caseStudy.project_type && (
+                <div>
+                  <label className="text-xs font-bold text-gray-500 uppercase tracking-wider flex items-center space-x-1.5 mb-1.5">
+                    <FileText className="w-3.5 h-3.5 text-indigo-600" />
+                    <span>Project Type</span>
+                  </label>
+                  <div className="text-sm font-semibold text-gray-800 bg-indigo-50 px-2.5 py-1 rounded-md border border-indigo-100 inline-block">
+                    {caseStudy.project_type}
+                  </div>
+                </div>
+              )}
+
               {/* Technologies */}
               <div>
                 <label className="text-xs font-bold text-gray-500 uppercase tracking-wider flex items-center space-x-1.5 mb-2.5">
@@ -297,6 +324,24 @@ export default function CaseStudyDetailPage({ params }: { params: Promise<{ slug
                 </div>
               </div>
 
+              {/* Business Outcomes */}
+              {caseStudy.business_outcomes && caseStudy.business_outcomes.length > 0 && (
+                <div>
+                  <label className="text-xs font-bold text-gray-500 uppercase tracking-wider flex items-center space-x-1.5 mb-2">
+                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
+                    <span>Business Outcomes</span>
+                  </label>
+                  <ul className="space-y-1">
+                    {caseStudy.business_outcomes.map((outcome, idx) => (
+                      <li key={idx} className="text-xs text-gray-700 flex items-start space-x-1.5">
+                        <span className="text-emerald-500 font-bold">•</span>
+                        <span>{outcome}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
               {/* Document details */}
               <div className="pt-4 border-t border-gray-100 text-xs text-gray-500 space-y-1.5">
                 <div>
@@ -308,6 +353,7 @@ export default function CaseStudyDetailPage({ params }: { params: Promise<{ slug
                   <span className="font-mono text-[10px] break-all">{caseStudy.pdf_storage_key || 'N/A'}</span>
                 </div>
               </div>
+
             </div>
           </div>
         </div>

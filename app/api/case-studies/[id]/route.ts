@@ -1,8 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createAdminClient } from '@/lib/supabase/admin';
+import { connectToDatabase } from '@/lib/db/mongodb';
+import { CaseStudyModel } from '@/lib/models/CaseStudy';
 import { deleteFile } from '@/lib/storage/backblaze';
 import { mockDbStore } from '../route';
-
+import mongoose from 'mongoose';
 
 export async function GET(
   request: NextRequest,
@@ -10,11 +11,17 @@ export async function GET(
 ) {
   try {
     const { id } = await params;
-    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-
     const requestedStatus = request.nextUrl.searchParams.get('status');
 
-    if (!supabaseUrl || supabaseUrl.includes('placeholder')) {
+    let isDbConnected = true;
+    try {
+      await connectToDatabase();
+    } catch (err) {
+      console.warn('[API /api/case-studies/[id] GET] MongoDB unconfigured. Falling back to in-memory store.');
+      isDbConnected = false;
+    }
+
+    if (!isDbConnected) {
       let item = mockDbStore.get(id);
       if (!item) {
         item = Array.from(mockDbStore.values()).find((r: any) => r.slug === id);
@@ -30,28 +37,30 @@ export async function GET(
       return NextResponse.json({ data: item });
     }
 
+    // Query MongoDB by _id or slug
+    const isValidObjectId = mongoose.Types.ObjectId.isValid(id);
+    const queryCond = isValidObjectId
+      ? { $or: [{ _id: id }, { slug: id }] }
+      : { slug: id };
 
-    const supabase = createAdminClient();
+    const doc = await CaseStudyModel.findOne(queryCond).lean();
 
-    let query = supabase.from('case_studies').select('*').eq('id', id);
-    let { data, error } = await query.maybeSingle();
-
-    if (!data) {
-      const slugQuery = supabase.from('case_studies').select('*').eq('slug', id);
-      const res = await slugQuery.maybeSingle();
-      data = res.data;
-      error = res.error;
-    }
-
-    if (error || !data) {
+    if (!doc) {
       return NextResponse.json({ error: 'Case study not found' }, { status: 404 });
     }
 
-    if (requestedStatus !== 'all' && data.status !== 'published') {
+    const item = {
+      ...doc,
+      id: doc._id.toString(),
+      _id: undefined,
+      __v: undefined,
+    };
+
+    if (requestedStatus !== 'all' && item.status !== 'published') {
       return NextResponse.json({ error: 'Case study not found' }, { status: 404 });
     }
 
-    return NextResponse.json({ data });
+    return NextResponse.json({ data: item });
   } catch (err: any) {
     console.error('[API /api/case-studies/[id] GET] Error:', err);
     return NextResponse.json({ error: err.message || 'Server error' }, { status: 500 });
@@ -65,20 +74,24 @@ export async function PUT(
   try {
     const { id } = await params;
     const body = await request.json();
-    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
 
-    if (!supabaseUrl || supabaseUrl.includes('placeholder')) {
+    let isDbConnected = true;
+    try {
+      await connectToDatabase();
+    } catch (err) {
+      console.warn('[API /api/case-studies/[id] PUT] MongoDB unconfigured. Falling back to in-memory store.');
+      isDbConnected = false;
+    }
+
+    if (!isDbConnected) {
       const existing = mockDbStore.get(id) || { id };
       const updated = { ...existing, ...body, updated_at: new Date().toISOString() };
       mockDbStore.set(id, updated);
       return NextResponse.json({ data: updated });
     }
 
-
-    const supabase = createAdminClient();
-
     const updatePayload: Record<string, any> = {
-      updated_at: new Date().toISOString(),
+      updated_at: new Date(),
     };
 
     const allowedFields = [
@@ -107,21 +120,30 @@ export async function PUT(
       }
     }
 
-    const { data, error } = await supabase
-      .from('case_studies')
-      .update(updatePayload)
-      .eq('id', id)
-      .select()
-      .single();
+    const isValidObjectId = mongoose.Types.ObjectId.isValid(id);
+    const queryCond = isValidObjectId
+      ? { $or: [{ _id: id }, { slug: id }] }
+      : { slug: id };
 
-    if (error) {
-      console.error('[API /api/case-studies/[id] PUT] Error:', error);
-      return NextResponse.json({ data: { id, ...updatePayload } });
+    const updatedDoc = await CaseStudyModel.findOneAndUpdate(queryCond, updatePayload, {
+      new: true,
+      runValidators: true,
+    }).lean();
+
+    if (!updatedDoc) {
+      return NextResponse.json({ error: 'Case study record not found to update.' }, { status: 404 });
     }
 
-    return NextResponse.json({ data });
+    const item = {
+      ...updatedDoc,
+      id: updatedDoc._id.toString(),
+      _id: undefined,
+      __v: undefined,
+    };
+
+    return NextResponse.json({ data: item });
   } catch (err: any) {
-    console.error('[API /api/case-studies/[id] PUT] Server error:', err);
+    console.error('[API /api/case-studies/[id] PUT] Error:', err);
     return NextResponse.json({ error: err.message || 'Server error' }, { status: 500 });
   }
 }
@@ -132,33 +154,36 @@ export async function DELETE(
 ) {
   try {
     const { id } = await params;
-    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
 
-    if (!supabaseUrl || supabaseUrl.includes('placeholder')) {
+    let isDbConnected = true;
+    try {
+      await connectToDatabase();
+    } catch (err) {
+      console.warn('[API /api/case-studies/[id] DELETE] MongoDB unconfigured. Falling back to in-memory store.');
+      isDbConnected = false;
+    }
+
+    if (!isDbConnected) {
+      mockDbStore.delete(id);
       return NextResponse.json({ success: true });
     }
 
-    const supabase = createAdminClient();
+    const isValidObjectId = mongoose.Types.ObjectId.isValid(id);
+    const queryCond = isValidObjectId
+      ? { $or: [{ _id: id }, { slug: id }] }
+      : { slug: id };
 
-    const { data: record } = await supabase
-      .from('case_studies')
-      .select('pdf_storage_key')
-      .eq('id', id)
-      .maybeSingle();
+    const record = await CaseStudyModel.findOne(queryCond).lean();
 
     if (record?.pdf_storage_key) {
       await deleteFile(record.pdf_storage_key);
     }
 
-    const { error } = await supabase.from('case_studies').delete().eq('id', id);
-
-    if (error) {
-      return NextResponse.json({ error: error.message }, { status: 500 });
-    }
+    await CaseStudyModel.deleteOne(queryCond);
 
     return NextResponse.json({ success: true });
   } catch (err: any) {
-    console.error('[API /api/case-studies/[id] DELETE] Server error:', err);
+    console.error('[API /api/case-studies/[id] DELETE] Error:', err);
     return NextResponse.json({ error: err.message || 'Server error' }, { status: 500 });
   }
 }

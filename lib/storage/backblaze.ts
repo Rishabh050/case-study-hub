@@ -2,6 +2,7 @@ import {
   S3Client,
   PutObjectCommand,
   GetObjectCommand,
+  HeadObjectCommand,
   DeleteObjectCommand,
 } from '@aws-sdk/client-s3';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
@@ -25,9 +26,12 @@ function getS3Client(): { client: S3Client | null; bucketName: string } {
     return { client: null, bucketName };
   }
 
+  const regionMatch = endpoint.match(/s3\.([a-z0-9-]+)\.backblazeb2\.com/i);
+  const region = regionMatch ? regionMatch[1] : 'us-east-005';
+
   const client = new S3Client({
     endpoint,
-    region: 'us-west-004', // Standard Backblaze S3 region or derived from endpoint
+    region,
     credentials: {
       accessKeyId: keyId,
       secretAccessKey: applicationKey,
@@ -39,7 +43,8 @@ function getS3Client(): { client: S3Client | null; bucketName: string } {
 }
 
 /**
- * Sanitizes original filename and generates a secure, unique storage key.
+ * Sanitizes original filename and generates a secure, unique canonical storage key.
+ * Pattern: case-studies/{timestamp}-{uuid8}-{sanitizedFilename}
  */
 export function generateSecureStorageKey(originalFileName: string): string {
   const sanitized = originalFileName.replace(/[^a-zA-Z0-9.-]/g, '_').toLowerCase();
@@ -49,13 +54,34 @@ export function generateSecureStorageKey(originalFileName: string): string {
 }
 
 /**
+ * Verifies if an object exists in Backblaze B2 via HeadObjectCommand.
+ */
+export async function checkObjectExists(storageKey: string): Promise<boolean> {
+  const { client, bucketName } = getS3Client();
+  if (!client || !storageKey) return false;
+
+  try {
+    const command = new HeadObjectCommand({
+      Bucket: bucketName,
+      Key: storageKey,
+    });
+    await client.send(command);
+    return true;
+  } catch (error: any) {
+    console.warn(`[Backblaze B2 HeadObject] Object not found for key "${storageKey}":`, error.name || error.message);
+    return false;
+  }
+}
+
+/**
  * Uploads a file buffer to Backblaze B2 PRIVATE bucket.
+ * Verifies object existence via HeadObject before returning success.
  */
 export async function uploadFile(
   fileBuffer: Buffer,
   fileName: string,
   contentType: string = 'application/pdf'
-): Promise<{ storageKey: string; fileName: string }> {
+): Promise<{ storageKey: string; fileName: string; uploadSuccess: boolean }> {
   const { client, bucketName } = getS3Client();
   const storageKey = generateSecureStorageKey(fileName);
 
@@ -64,6 +90,7 @@ export async function uploadFile(
     return {
       storageKey,
       fileName,
+      uploadSuccess: false,
     };
   }
 
@@ -76,9 +103,20 @@ export async function uploadFile(
 
   await client.send(command);
 
+  // Immediately verify object exists using HeadObject
+  const uploadSuccess = await checkObjectExists(storageKey);
+
+  console.log('=== B2 UPLOAD DIAGNOSTIC ===', {
+    bucket: bucketName,
+    objectKey: storageKey,
+    fileName,
+    uploadSuccess,
+  });
+
   return {
     storageKey,
     fileName,
+    uploadSuccess,
   };
 }
 
@@ -130,6 +168,10 @@ export async function getFile(storageKey: string): Promise<Buffer> {
   return Buffer.from(byteArray);
 }
 
+/**
+ * Generates a presigned download/view URL for Backblaze B2.
+ * Uses EXACT canonical storageKey without stripping folder prefixes.
+ */
 export async function generateDownloadUrl(
   storageKey: string,
   expiresInSeconds: number = 3600,
@@ -138,7 +180,11 @@ export async function generateDownloadUrl(
 ): Promise<string | null> {
   const { client, bucketName } = getS3Client();
 
-  if (!client) {
+  const isPlaceholder =
+    process.env.B2_KEY_ID?.includes('your-b2-key-id') ||
+    process.env.B2_APPLICATION_KEY?.includes('your-b2-application-key');
+
+  if (!client || isPlaceholder) {
     if (process.env.NODE_ENV === 'production') {
       console.error('[Backblaze B2 Guard] Storage client credentials missing in production mode.');
       return null;
@@ -147,16 +193,25 @@ export async function generateDownloadUrl(
     return `#b2-credentials-missing-storage-key-${storageKey}`;
   }
 
+  // MUST use exact canonical storageKey as uploaded (e.g. case-studies/178655...-devops.pdf)
+  const exists = await checkObjectExists(storageKey);
+  if (!exists) {
+    console.error(`[Backblaze B2] Cannot generate download URL. HeadObject failed for key: "${storageKey}"`);
+    return null;
+  }
+
+  const cleanFileName = fileName || storageKey.split('/').pop() || 'document.pdf';
+
   const command = new GetObjectCommand({
     Bucket: bucketName,
     Key: storageKey,
     ResponseContentType: 'application/pdf',
     ResponseContentDisposition: download
-      ? `attachment; filename="${encodeURIComponent(fileName || 'case-study.pdf')}"`
-      : `inline; filename="${encodeURIComponent(fileName || 'case-study.pdf')}"`,
+      ? `attachment; filename="${encodeURIComponent(cleanFileName)}"`
+      : `inline; filename="${encodeURIComponent(cleanFileName)}"`,
   });
 
-  return await getSignedUrl(client, command, { expiresIn: expiresInSeconds });
+  const url = await getSignedUrl(client, command, { expiresIn: expiresInSeconds });
+
+  return url;
 }
-
-

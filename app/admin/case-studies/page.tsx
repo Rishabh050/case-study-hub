@@ -17,6 +17,8 @@ import {
   ArrowUpDown,
   Filter,
   Shield,
+  Sparkles,
+  RefreshCw,
 } from 'lucide-react';
 
 export default function AdminCaseStudiesPage() {
@@ -25,9 +27,55 @@ export default function AdminCaseStudiesPage() {
   const [statusFilter, setStatusFilter] = useState<string>('');
   const [searchQuery, setSearchQuery] = useState('');
 
+  // Batch extraction state
+  const [batchExtracting, setBatchExtracting] = useState(false);
+  const [batchProgress, setBatchProgress] = useState('Extracting...');
+  const [extractingId, setExtractingId] = useState<string | null>(null);
+
   // Delete modal state
   const [deleteTarget, setDeleteTarget] = useState<CaseStudy | null>(null);
   const [deleting, setDeleting] = useState(false);
+
+  const handleBatchExtract = async () => {
+    try {
+      setBatchExtracting(true);
+      setBatchProgress('Extracting (1/61)...');
+      const res = await fetch('/api/ai/batch-extract', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ forceReextract: true, limit: 61 }),
+      });
+      if (res.ok) {
+        const json = await res.json();
+        alert(`Batch Metadata Extraction Complete!\n\nTotal: ${json.summary.total}\nCompleted: ${json.summary.completed}\nFailed: ${json.summary.failed}\nSkipped: ${json.summary.skipped}`);
+        fetchStudies();
+      }
+    } catch (err) {
+      console.error('Batch extraction failed:', err);
+    } finally {
+      setBatchExtracting(false);
+      setBatchProgress('Extracting...');
+    }
+  };
+
+  const handleSingleExtract = async (study: CaseStudy) => {
+    try {
+      setExtractingId(study.id);
+      const res = await fetch('/api/ai/batch-extract', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ caseStudyId: study.id, forceReextract: true }),
+      });
+      if (res.ok) {
+        fetchStudies();
+      }
+    } catch (err) {
+      console.error('Single extraction failed:', err);
+    } finally {
+      setExtractingId(null);
+    }
+  };
+
 
   const fetchStudies = useCallback(async () => {
     setLoading(true);
@@ -120,6 +168,15 @@ export default function AdminCaseStudiesPage() {
           </div>
 
           <div className="flex items-center space-x-3">
+            <button
+              onClick={handleBatchExtract}
+              disabled={batchExtracting}
+              className="inline-flex items-center space-x-2 px-4 py-2.5 bg-indigo-600 hover:bg-indigo-700 disabled:opacity-50 text-white font-semibold text-sm rounded-lg shadow-sm transition-colors"
+            >
+              <Sparkles className="w-4 h-4" />
+              <span>{batchExtracting ? batchProgress : 'Batch Extract Metadata (All 61)'}</span>
+            </button>
+
             <Link
               href="/admin/case-studies/new"
               className="inline-flex items-center space-x-2 px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-semibold text-sm rounded-lg shadow-sm transition-colors"
@@ -128,6 +185,7 @@ export default function AdminCaseStudiesPage() {
               <span>Add New Case Study</span>
             </Link>
           </div>
+
         </div>
       </div>
 
@@ -252,6 +310,15 @@ export default function AdminCaseStudiesPage() {
                             <Eye className="w-4 h-4" />
                           </Link>
 
+                          <button
+                            onClick={() => handleSingleExtract(study)}
+                            disabled={extractingId === study.id}
+                            className="p-1.5 text-indigo-600 hover:bg-indigo-50 rounded-md transition-colors disabled:opacity-50"
+                            title={study.technologies && study.technologies.length > 0 ? "Re-extract AI Metadata" : "Extract AI Metadata"}
+                          >
+                            <Sparkles className={`w-4 h-4 ${extractingId === study.id ? 'animate-spin' : ''}`} />
+                          </button>
+
                           <Link
                             href={`/admin/case-studies/${study.id}/edit`}
                             className="p-1.5 text-gray-500 hover:text-blue-600 hover:bg-blue-50 rounded-md transition-colors"
@@ -259,6 +326,7 @@ export default function AdminCaseStudiesPage() {
                           >
                             <Edit className="w-4 h-4" />
                           </Link>
+
 
                           {/* Quick Publish / Unpublish Toggle */}
                           {study.status === 'published' ? (
