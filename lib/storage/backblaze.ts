@@ -15,17 +15,34 @@ import crypto from 'crypto';
  */
 
 /**
+ * Server-side helper to sanitize environment variables against malformed input
+ * (e.g. quotes, leading/trailing whitespace, newlines, or accidental variable name prefixes).
+ */
+export function sanitizeEnvVar(val?: string, keyPrefix?: string): string {
+  if (!val) return '';
+  let clean = val.trim();
+  // Strip quotes
+  clean = clean.replace(/^["']|["']$/g, '').trim();
+  // Strip accidental prefix (e.g. B2_KEY_ID=005...)
+  if (keyPrefix) {
+    const regex = new RegExp(`^${keyPrefix}=`, 'i');
+    clean = clean.replace(regex, '').trim();
+  }
+  return clean;
+}
+
+/**
  * Checks if Backblaze B2 environment variables are properly configured.
  */
 export function isB2Configured(): boolean {
-  const endpoint = process.env.B2_ENDPOINT;
-  const keyId = process.env.B2_KEY_ID;
-  const applicationKey = process.env.B2_APPLICATION_KEY;
+  const keyId = sanitizeEnvVar(process.env.B2_KEY_ID, 'B2_KEY_ID');
+  const appKey = sanitizeEnvVar(process.env.B2_APPLICATION_KEY, 'B2_APPLICATION_KEY');
+  const rawEndpoint = sanitizeEnvVar(process.env.B2_ENDPOINT, 'B2_ENDPOINT');
 
-  if (!endpoint || !keyId || !applicationKey) return false;
+  if (!rawEndpoint || !keyId || !appKey) return false;
   if (
     keyId.includes('your-b2-key-id') ||
-    applicationKey.includes('your-b2-application-key')
+    appKey.includes('your-b2-application-key')
   ) {
     return false;
   }
@@ -33,24 +50,37 @@ export function isB2Configured(): boolean {
   return true;
 }
 
-function getS3Client(): { client: S3Client | null; bucketName: string } {
-  const endpoint = process.env.B2_ENDPOINT;
-  const keyId = process.env.B2_KEY_ID;
-  const applicationKey = process.env.B2_APPLICATION_KEY;
-  const bucketName = process.env.B2_BUCKET_NAME || 'Case-Studies';
+/**
+ * Sanitizes endpoint to enforce strictly: https://s3.<region>.backblazeb2.com
+ * Strips accidental path prefixes, bucket names, and trailing slashes.
+ */
+export function getCleanB2Endpoint(): { cleanEndpoint: string; region: string; hostname: string } {
+  const rawEndpoint = sanitizeEnvVar(process.env.B2_ENDPOINT, 'B2_ENDPOINT');
+  let hostOnly = rawEndpoint.replace(/^https?:\/\//i, '').split('/')[0].trim();
 
-  if (!endpoint || !keyId || !applicationKey || !isB2Configured()) {
-    return { client: null, bucketName };
+  // If host is just us-east-005.backblazeb2.com without s3.
+  if (hostOnly.includes('backblazeb2.com') && !hostOnly.startsWith('s3.')) {
+    hostOnly = `s3.${hostOnly}`;
   }
 
-  // Ensure clean endpoint with https:// protocol and no trailing slashes
-  let cleanEndpoint = endpoint.trim().replace(/\/+$/, '');
-  if (!cleanEndpoint.startsWith('http://') && !cleanEndpoint.startsWith('https://')) {
-    cleanEndpoint = `https://${cleanEndpoint}`;
-  }
-
-  const regionMatch = cleanEndpoint.match(/s3\.([a-z0-9-]+)\.backblazeb2\.com/i);
+  const regionMatch = hostOnly.match(/s3\.([a-z0-9-]+)\.backblazeb2\.com/i);
   const region = regionMatch ? regionMatch[1] : 'us-east-005';
+  const cleanEndpoint = `https://${hostOnly || 's3.us-east-005.backblazeb2.com'}`;
+
+  return { cleanEndpoint, region, hostname: hostOnly };
+}
+
+function getS3Client(): { client: S3Client | null; bucketName: string } {
+  if (!isB2Configured()) {
+    return { client: null, bucketName: 'Case-Studies' };
+  }
+
+  const keyId = sanitizeEnvVar(process.env.B2_KEY_ID, 'B2_KEY_ID');
+  const applicationKey = sanitizeEnvVar(process.env.B2_APPLICATION_KEY, 'B2_APPLICATION_KEY');
+  const rawBucket = sanitizeEnvVar(process.env.B2_BUCKET_NAME, 'B2_BUCKET_NAME');
+  const bucketName = rawBucket || 'Case-Studies';
+
+  const { cleanEndpoint, region } = getCleanB2Endpoint();
 
   const client = new S3Client({
     endpoint: cleanEndpoint,
@@ -248,7 +278,7 @@ export async function getFile(storageKey: string): Promise<Buffer> {
 
 /**
  * Generates a presigned download/view URL for Backblaze B2.
- * Uses exact canonical storageKey with candidate key resolution.
+ * Uses exact canonical storageKey with candidate key resolution and AWS SigV4.
  */
 export async function generateDownloadUrl(
   storageKey: string,
