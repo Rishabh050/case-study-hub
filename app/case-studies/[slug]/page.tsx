@@ -3,6 +3,7 @@
 import { useState, useEffect, use } from 'react';
 import Link from 'next/link';
 import { CaseStudy } from '@/lib/types/case-study';
+import { formatCaseStudyDate } from '@/lib/utils/date';
 import { Badge } from '@/components/ui/Badge';
 import {
   ArrowLeft,
@@ -24,6 +25,7 @@ export default function CaseStudyDetailPage({ params }: { params: Promise<{ slug
   const [loading, setLoading] = useState(true);
   const [pdfUrl, setPdfUrl] = useState<string | null>(null);
   const [pdfLoading, setPdfLoading] = useState(false);
+  const [isB2Configured, setIsB2Configured] = useState<boolean>(true);
 
   useEffect(() => {
     async function loadCaseStudy() {
@@ -51,12 +53,20 @@ export default function CaseStudyDetailPage({ params }: { params: Promise<{ slug
     try {
       setPdfLoading(true);
       const res = await fetch(`/api/pdf/download?key=${encodeURIComponent(storageKey)}`);
-      if (res.ok) {
-        const json = await res.json();
+      const json = await res.json().catch(() => null);
+
+      if (res.ok && json?.url) {
         setPdfUrl(json.url);
+        setIsB2Configured(true);
+      } else {
+        setPdfUrl(null);
+        if (json && typeof json.isB2Configured === 'boolean') {
+          setIsB2Configured(json.isB2Configured);
+        }
       }
     } catch (err) {
       console.error('Error fetching presigned PDF URL:', err);
+      setPdfUrl(null);
     } finally {
       setPdfLoading(false);
     }
@@ -165,7 +175,9 @@ export default function CaseStudyDetailPage({ params }: { params: Promise<{ slug
                   <span>
                     {pdfLoading
                       ? 'Generating secure Backblaze B2 link...'
-                      : 'PDF attachment available upon configuring B2 environment variables.'}
+                      : !isB2Configured
+                      ? 'PDF attachment available upon configuring B2 environment variables.'
+                      : 'PDF document is currently unavailable in storage.'}
                   </span>
                 </div>
               )}
@@ -209,7 +221,7 @@ export default function CaseStudyDetailPage({ params }: { params: Promise<{ slug
                   <span className="w-2 h-6 bg-red-500 rounded-full inline-block" />
                   <span>The Challenge</span>
                 </h3>
-                <p className="text-gray-700 text-sm leading-relaxed whitespace-pre-line">
+                <p className="text-sm text-gray-700 leading-relaxed whitespace-pre-line">
                   {caseStudy.challenge}
                 </p>
               </div>
@@ -222,58 +234,30 @@ export default function CaseStudyDetailPage({ params }: { params: Promise<{ slug
                   <span className="w-2 h-6 bg-emerald-500 rounded-full inline-block" />
                   <span>The Solution</span>
                 </h3>
-                <p className="text-gray-700 text-sm leading-relaxed whitespace-pre-line">
+                <p className="text-sm text-gray-700 leading-relaxed whitespace-pre-line">
                   {caseStudy.solution}
                 </p>
               </div>
             )}
           </div>
 
-          {/* Sidebar Column: Metadata, Tech, Services, Tags */}
+          {/* Sidebar Column: Metadata & Tech Specs */}
           <div className="space-y-6">
-            {/* Metadata Summary Sidebar Card */}
             <div className="bg-white rounded-xl border border-gray-200 p-6 shadow-sm space-y-6">
-              <h3 className="text-sm font-extrabold text-gray-900 uppercase tracking-wider border-b border-gray-100 pb-3">
-                Metadata Breakdown
+              <h3 className="text-sm font-bold text-gray-900 uppercase tracking-wider border-b border-gray-100 pb-3">
+                Project Overview
               </h3>
-
-              {/* Industry & Sub-Industry */}
-              <div>
-                <label className="text-xs font-bold text-gray-500 uppercase tracking-wider flex items-center space-x-1.5 mb-1.5">
-                  <Building2 className="w-3.5 h-3.5 text-blue-600" />
-                  <span>Industry</span>
-                </label>
-                <div className="text-sm font-semibold text-gray-900">
-                  {caseStudy.industry || 'Information Technology'}
-                  {caseStudy.sub_industry && (
-                    <span className="block text-xs font-normal text-gray-500 mt-0.5">{caseStudy.sub_industry}</span>
-                  )}
-                </div>
-              </div>
-
-              {/* Project Type */}
-              {caseStudy.project_type && (
-                <div>
-                  <label className="text-xs font-bold text-gray-500 uppercase tracking-wider flex items-center space-x-1.5 mb-1.5">
-                    <FileText className="w-3.5 h-3.5 text-indigo-600" />
-                    <span>Project Type</span>
-                  </label>
-                  <div className="text-sm font-semibold text-gray-800 bg-indigo-50 px-2.5 py-1 rounded-md border border-indigo-100 inline-block">
-                    {caseStudy.project_type}
-                  </div>
-                </div>
-              )}
 
               {/* Technologies */}
               <div>
-                <label className="text-xs font-bold text-gray-500 uppercase tracking-wider flex items-center space-x-1.5 mb-2.5">
+                <label className="text-xs font-bold text-gray-500 uppercase tracking-wider flex items-center space-x-1.5 mb-2">
                   <Cpu className="w-3.5 h-3.5 text-blue-600" />
-                  <span>Technologies</span>
+                  <span>Technologies Used</span>
                 </label>
                 <div className="flex flex-wrap gap-1.5">
                   {caseStudy.technologies && caseStudy.technologies.length > 0 ? (
                     caseStudy.technologies.map((tech, idx) => (
-                      <Badge key={idx} variant="blue" size="md">
+                      <Badge key={idx} variant="gray">
                         {tech}
                       </Badge>
                     ))
@@ -285,15 +269,15 @@ export default function CaseStudyDetailPage({ params }: { params: Promise<{ slug
 
               {/* Services */}
               <div>
-                <label className="text-xs font-bold text-gray-500 uppercase tracking-wider flex items-center space-x-1.5 mb-2.5">
+                <label className="text-xs font-bold text-gray-500 uppercase tracking-wider flex items-center space-x-1.5 mb-2">
                   <Layers className="w-3.5 h-3.5 text-purple-600" />
-                  <span>Services</span>
+                  <span>Services Delivered</span>
                 </label>
                 <div className="flex flex-wrap gap-1.5">
                   {caseStudy.services && caseStudy.services.length > 0 ? (
-                    caseStudy.services.map((srv, idx) => (
-                      <Badge key={idx} variant="purple" size="md">
-                        {srv}
+                    caseStudy.services.map((service, idx) => (
+                      <Badge key={idx} variant="purple">
+                        {service}
                       </Badge>
                     ))
                   ) : (
@@ -304,17 +288,14 @@ export default function CaseStudyDetailPage({ params }: { params: Promise<{ slug
 
               {/* Tags */}
               <div>
-                <label className="text-xs font-bold text-gray-500 uppercase tracking-wider flex items-center space-x-1.5 mb-2.5">
+                <label className="text-xs font-bold text-gray-500 uppercase tracking-wider flex items-center space-x-1.5 mb-2">
                   <Tag className="w-3.5 h-3.5 text-amber-600" />
-                  <span>Tags</span>
+                  <span>Search Tags</span>
                 </label>
-                <div className="flex flex-wrap gap-1.5">
+                <div className="flex flex-wrap gap-1">
                   {caseStudy.tags && caseStudy.tags.length > 0 ? (
                     caseStudy.tags.map((tag, idx) => (
-                      <span
-                        key={idx}
-                        className="text-xs font-medium text-gray-700 bg-gray-100 px-2.5 py-1 rounded-md border border-gray-200"
-                      >
+                      <span key={idx} className="text-xs text-gray-600 bg-gray-50 px-2 py-0.5 rounded border border-gray-100">
                         #{tag}
                       </span>
                     ))
@@ -346,7 +327,7 @@ export default function CaseStudyDetailPage({ params }: { params: Promise<{ slug
               <div className="pt-4 border-t border-gray-100 text-xs text-gray-500 space-y-1.5">
                 <div>
                   <span className="font-semibold text-gray-700">Published:</span>{' '}
-                  {new Date(caseStudy.created_at).toLocaleDateString()}
+                  {formatCaseStudyDate(caseStudy)}
                 </div>
                 <div>
                   <span className="font-semibold text-gray-700">Storage Key:</span>{' '}

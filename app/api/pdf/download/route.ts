@@ -1,5 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { generateDownloadUrl, checkObjectExists } from '@/lib/storage/backblaze';
+import {
+  generateDownloadUrl,
+  checkObjectExists,
+  isB2Configured,
+  getB2DiagnosticStatus,
+} from '@/lib/storage/backblaze';
 import fs from 'fs';
 import path from 'path';
 
@@ -11,41 +16,42 @@ export async function GET(request: NextRequest) {
     const { searchParams } = new URL(request.url);
     const key = searchParams.get('key');
     const download = searchParams.get('download') === 'true';
+    const diagnostic = searchParams.get('diagnostic') === 'true';
     const caseStudyId = searchParams.get('id') || null;
 
+    // Safe Diagnostic Health Mode (NEVER reveals secret values)
+    if (diagnostic) {
+      const diagStatus = await getB2DiagnosticStatus(key || undefined);
+      return NextResponse.json({
+        success: true,
+        diagnostic: diagStatus,
+      });
+    }
+
     if (!key) {
-      return NextResponse.json({ success: false, error: 'Missing storage key parameter.' }, { status: 400 });
+      return NextResponse.json(
+        {
+          success: false,
+          isB2Configured: isB2Configured(),
+          error: 'Missing storage key parameter.',
+        },
+        { status: 400 }
+      );
     }
 
-    // Ensure key prefix consistency (case-studies/...)
-    let canonicalStorageKey = key;
-    if (!canonicalStorageKey.startsWith('case-studies/') && !canonicalStorageKey.includes('/')) {
-      canonicalStorageKey = `case-studies/${key}`;
-    }
-
-    const bucketName = process.env.B2_BUCKET_NAME || 'Case-Studies';
+    const b2Ready = isB2Configured();
     const rawFileName = key.split('/').pop() || 'document.pdf';
 
-    // 1. Check if object actually exists in B2 via HeadObject
-    const existsInB2 = await checkObjectExists(canonicalStorageKey);
-
+    // 1. Server-side Presigned Download URL Generation via B2 S3 API
     let presignedUrl: string | null = null;
-    if (existsInB2) {
-      presignedUrl = await generateDownloadUrl(canonicalStorageKey, 3600, rawFileName, download);
-    } else if (key !== canonicalStorageKey) {
-      // Try raw key as fallback
-      const existsRaw = await checkObjectExists(key);
-      if (existsRaw) {
-        canonicalStorageKey = key;
-        presignedUrl = await generateDownloadUrl(key, 3600, rawFileName, download);
-      }
+    if (b2Ready) {
+      presignedUrl = await generateDownloadUrl(key, 3600, rawFileName, download);
     }
 
     console.log('=== DOWNLOAD DIAGNOSTIC ===', {
       requestedCaseStudyId: caseStudyId,
       databaseStorageKey: key,
-      bucket: bucketName,
-      exactObjectKey: canonicalStorageKey,
+      isB2Configured: b2Ready,
       generatedUrl: presignedUrl ? presignedUrl.slice(0, 100) + '...' : null,
       existsInB2: Boolean(presignedUrl && presignedUrl.startsWith('http')),
     });
@@ -55,7 +61,12 @@ export async function GET(request: NextRequest) {
       if (download) {
         return NextResponse.redirect(presignedUrl, 307);
       }
-      return NextResponse.json({ success: true, url: presignedUrl, storageKey: canonicalStorageKey });
+      return NextResponse.json({
+        success: true,
+        url: presignedUrl,
+        isB2Configured: true,
+        storageKey: key,
+      });
     }
 
     // 3. Development/Local Fallback: Serve binary PDF directly from local source directory if B2 fails or in dev mode
@@ -79,7 +90,12 @@ export async function GET(request: NextRequest) {
 
         if (!download && !request.headers.get('accept')?.includes('text/html')) {
           const streamUrl = `/api/pdf/download?key=${encodeURIComponent(key)}&download=true`;
-          return NextResponse.json({ success: true, url: streamUrl, storageKey: key });
+          return NextResponse.json({
+            success: true,
+            url: streamUrl,
+            isB2Configured: b2Ready,
+            storageKey: key,
+          });
         }
 
         return new NextResponse(fileBuffer, {
@@ -92,11 +108,14 @@ export async function GET(request: NextRequest) {
       }
     }
 
-    // 4. Clean JSON error response instead of broken B2 XML error page
+    // 4. Return clean JSON error status with exact B2 configuration state
     return NextResponse.json(
       {
         success: false,
-        error: 'PDF object not found in Backblaze B2',
+        isB2Configured: b2Ready,
+        error: b2Ready
+          ? 'PDF object is currently unavailable in Backblaze B2 storage.'
+          : 'Backblaze B2 environment variables are unconfigured.',
         storageKey: key,
         caseStudyId,
       },
@@ -105,7 +124,11 @@ export async function GET(request: NextRequest) {
   } catch (err: any) {
     console.error('[API /api/pdf/download] Error:', err);
     return NextResponse.json(
-      { success: false, error: 'Failed to process PDF request safely.' },
+      {
+        success: false,
+        isB2Configured: isB2Configured(),
+        error: 'Failed to process PDF request safely.',
+      },
       { status: 500 }
     );
   }

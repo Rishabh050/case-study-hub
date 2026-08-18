@@ -13,6 +13,7 @@ import {
   Shield,
 } from 'lucide-react';
 import { CaseStudy } from '@/lib/types/case-study';
+import { formatCaseStudyDate } from '@/lib/utils/date';
 
 export default function AdminDashboardPage() {
   const [stats, setStats] = useState({
@@ -183,7 +184,7 @@ export default function AdminDashboardPage() {
                     <div className="flex items-center space-x-3 text-xs text-gray-500 mt-1">
                       <span>Industry: {study.industry || 'N/A'}</span>
                       <span>&bull;</span>
-                      <span>Added: {new Date(study.created_at).toLocaleDateString()}</span>
+                      <span>Added: {formatCaseStudyDate(study)}</span>
                     </div>
                   </div>
 

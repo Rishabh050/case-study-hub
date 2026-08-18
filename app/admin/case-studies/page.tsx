@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import { CaseStudy, CaseStudyStatus } from '@/lib/types/case-study';
+import { formatCaseStudyDate } from '@/lib/utils/date';
 import { Modal } from '@/components/ui/Modal';
 import {
   PlusCircle,
@@ -295,7 +296,7 @@ export default function AdminCaseStudiesPage() {
 
                       {/* Created Date */}
                       <td className="py-4 px-4 text-xs text-gray-500">
-                        {new Date(study.created_at).toLocaleDateString()}
+                        {formatCaseStudyDate(study)}
                       </td>
 
                       {/* Actions */}
