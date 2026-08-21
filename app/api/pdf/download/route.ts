@@ -1,134 +1,117 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { getBsServerPdfUrl } from '@/lib/storage/pdf-url-resolver';
 import {
   generateDownloadUrl,
-  checkObjectExists,
   isB2Configured,
   getB2DiagnosticStatus,
 } from '@/lib/storage/backblaze';
-import fs from 'fs';
-import path from 'path';
-
-const LOCAL_SOURCE_DIR = 'D:\\Downloads\\new-case-study';
-const isProduction = process.env.NODE_ENV === 'production';
+import { connectToDatabase } from '@/lib/db/mongodb';
+import { CaseStudyModel } from '@/lib/models/CaseStudy';
+import ALL_61_RECORDS from '@/scripts/all_61_published_records.json';
 
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
     const key = searchParams.get('key');
+    const fileNameParam = searchParams.get('fileName') || searchParams.get('file_name');
     const download = searchParams.get('download') === 'true';
     const diagnostic = searchParams.get('diagnostic') === 'true';
     const caseStudyId = searchParams.get('id') || null;
 
-    // Safe Diagnostic Health Mode (NEVER reveals secret values)
+    // Safe Diagnostic Health Mode
     if (diagnostic) {
       const diagStatus = await getB2DiagnosticStatus(key || undefined);
       return NextResponse.json({
         success: true,
         diagnostic: diagStatus,
+        bsServerBaseUrl: 'https://bs.cisinlive.com/dinesh/rishabh/Case-Studies',
       });
     }
 
-    if (!key) {
-      return NextResponse.json(
-        {
-          success: false,
-          isB2Configured: isB2Configured(),
-          error: 'Missing storage key parameter.',
-        },
-        { status: 400 }
-      );
+    let targetFileName: string | null = fileNameParam || null;
+
+    // Resolve pdf_file_name if not provided directly
+    if (!targetFileName && key) {
+      // 1. Check if key is raw filename (e.g. "Linxitt.pdf")
+      if (!key.startsWith('case-studies/')) {
+        targetFileName = key;
+      } else {
+        // 2. Try looking up in database or local store by pdf_storage_key or id
+        const localMatch = ALL_61_RECORDS.find(
+          (r: any) => r.pdf_storage_key === key || r.id === caseStudyId || r.pdf_file_name === key
+        );
+        if (localMatch?.pdf_file_name) {
+          targetFileName = localMatch.pdf_file_name;
+        } else {
+          // Try MongoDB lookup if DB is connected
+          try {
+            await connectToDatabase();
+            const dbMatch = await CaseStudyModel.findOne({
+              $or: [{ pdf_storage_key: key }, { _id: caseStudyId }, { pdf_file_name: key }],
+            }).lean();
+            if (dbMatch?.pdf_file_name) {
+              targetFileName = dbMatch.pdf_file_name;
+            }
+          } catch (e) {
+            // DB lookup optional fallback
+          }
+        }
+
+        // Fallback: strip case-studies/ timestamp-uuid prefix if name couldn't be resolved
+        if (!targetFileName) {
+          const rawBasename = key.split('/').pop() || '';
+          // Remove timestamp-uuid prefix e.g. 1786608446819-b9ca3af6-
+          targetFileName = rawBasename.replace(/^\d+-[a-f0-9]{8}-/, '');
+        }
+      }
     }
 
-    const b2Ready = isB2Configured();
-    const rawFileName = key.split('/').pop() || 'document.pdf';
+    // Generate BS Server HTTPS URL
+    const bsUrl = targetFileName ? getBsServerPdfUrl(targetFileName) : '';
 
-    // 1. Server-side Presigned Download URL Generation via B2 S3 API
-    let presignedUrl: string | null = null;
-    if (b2Ready) {
-      presignedUrl = await generateDownloadUrl(key, 3600, rawFileName, download);
-    }
-
-    console.log('=== DOWNLOAD DIAGNOSTIC ===', {
-      requestedCaseStudyId: caseStudyId,
-      databaseStorageKey: key,
-      isB2Configured: b2Ready,
-      generatedUrl: presignedUrl ? presignedUrl.slice(0, 100) + '...' : null,
-      existsInB2: Boolean(presignedUrl && presignedUrl.startsWith('http')),
-    });
-
-    // 2. If valid B2 presigned URL generated
-    if (presignedUrl && presignedUrl.startsWith('http')) {
+    if (bsUrl) {
       if (download) {
-        return NextResponse.redirect(presignedUrl, 307);
+        return NextResponse.redirect(bsUrl, 307);
       }
       return NextResponse.json({
         success: true,
-        url: presignedUrl,
+        url: bsUrl,
         isB2Configured: true,
-        storageKey: key,
+        storageKey: key || targetFileName,
+        fileName: targetFileName,
+        provider: 'BS_SERVER',
       });
     }
 
-    // 3. Development/Local Fallback: Serve binary PDF directly from local source directory if B2 fails or in dev mode
-    if (!isProduction && fs.existsSync(LOCAL_SOURCE_DIR)) {
-      const files = fs.readdirSync(LOCAL_SOURCE_DIR);
-      const normKey = key.toLowerCase().replace(/case-studies\//, '').replace(/[^a-z0-9]/g, '');
-
-      const matchedFile = files.find((f) => {
-        const normFile = f.toLowerCase().replace(/[^a-z0-9]/g, '');
-        const normFileNoExt = f.replace(/\.pdf$/i, '').toLowerCase().replace(/[^a-z0-9]/g, '');
-        return normKey.includes(normFileNoExt) || normFile.includes(normKey) || normFileNoExt.includes(normKey);
-      });
-
-      if (matchedFile) {
-        const filePath = path.join(LOCAL_SOURCE_DIR, matchedFile);
-        const fileBuffer = fs.readFileSync(filePath);
-
-        const disposition = download
-          ? `attachment; filename="${encodeURIComponent(matchedFile)}"`
-          : `inline; filename="${encodeURIComponent(matchedFile)}"`;
-
-        if (!download && !request.headers.get('accept')?.includes('text/html')) {
-          const streamUrl = `/api/pdf/download?key=${encodeURIComponent(key)}&download=true`;
-          return NextResponse.json({
-            success: true,
-            url: streamUrl,
-            isB2Configured: b2Ready,
-            storageKey: key,
-          });
+    // Fallback to Backblaze B2 presigned URL if BS Server resolution fails & B2 is configured
+    if (key && isB2Configured()) {
+      const rawFileName = key.split('/').pop() || 'document.pdf';
+      const presignedUrl = await generateDownloadUrl(key, 3600, rawFileName, download);
+      if (presignedUrl && presignedUrl.startsWith('http')) {
+        if (download) {
+          return NextResponse.redirect(presignedUrl, 307);
         }
-
-        return new NextResponse(fileBuffer, {
-          headers: {
-            'Content-Type': 'application/pdf',
-            'Content-Disposition': disposition,
-            'Content-Length': fileBuffer.length.toString(),
-          },
+        return NextResponse.json({
+          success: true,
+          url: presignedUrl,
+          isB2Configured: true,
+          storageKey: key,
+          provider: 'BACKBLAZE_B2_FALLBACK',
         });
       }
     }
 
-    // 4. Return clean JSON error status with exact B2 configuration state
     return NextResponse.json(
       {
         success: false,
-        isB2Configured: b2Ready,
-        error: b2Ready
-          ? 'PDF object is currently unavailable in Backblaze B2 storage.'
-          : 'Backblaze B2 environment variables are unconfigured.',
-        storageKey: key,
-        caseStudyId,
+        error: 'Unable to resolve PDF URL for the requested case study.',
       },
       { status: 404 }
     );
   } catch (err: any) {
-    console.error('[API /api/pdf/download] Error:', err);
+    console.error('[API /api/pdf/download] Server error:', err);
     return NextResponse.json(
-      {
-        success: false,
-        isB2Configured: isB2Configured(),
-        error: 'Failed to process PDF request safely.',
-      },
+      { success: false, error: err.message || 'Failed to process PDF download request' },
       { status: 500 }
     );
   }

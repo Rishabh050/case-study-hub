@@ -19,6 +19,8 @@ import {
   ShieldCheck,
 } from 'lucide-react';
 
+import { getBsServerPdfUrl } from '@/lib/storage/pdf-url-resolver';
+
 export default function CaseStudyDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = use(params);
   const [caseStudy, setCaseStudy] = useState<CaseStudy | null>(null);
@@ -36,8 +38,9 @@ export default function CaseStudyDetailPage({ params }: { params: Promise<{ slug
           const json = await res.json();
           setCaseStudy(json.data);
 
-          if (json.data?.pdf_storage_key) {
-            fetchPdfUrl(json.data.pdf_storage_key);
+          const targetFileName = json.data?.pdf_file_name || json.data?.pdf_storage_key;
+          if (targetFileName) {
+            fetchPdfUrl(targetFileName);
           }
         }
       } catch (err) {
@@ -49,10 +52,17 @@ export default function CaseStudyDetailPage({ params }: { params: Promise<{ slug
     loadCaseStudy();
   }, [slug]);
 
-  const fetchPdfUrl = async (storageKey: string) => {
+  const fetchPdfUrl = async (fileNameOrKey: string) => {
     try {
       setPdfLoading(true);
-      const res = await fetch(`/api/pdf/download?key=${encodeURIComponent(storageKey)}`);
+      const bsUrl = getBsServerPdfUrl(fileNameOrKey);
+      if (bsUrl) {
+        setPdfUrl(bsUrl);
+        setIsB2Configured(true);
+        return;
+      }
+
+      const res = await fetch(`/api/pdf/download?key=${encodeURIComponent(fileNameOrKey)}`);
       const json = await res.json().catch(() => null);
 
       if (res.ok && json?.url) {
@@ -65,7 +75,7 @@ export default function CaseStudyDetailPage({ params }: { params: Promise<{ slug
         }
       }
     } catch (err) {
-      console.error('Error fetching presigned PDF URL:', err);
+      console.error('Error fetching PDF URL:', err);
       setPdfUrl(null);
     } finally {
       setPdfLoading(false);
@@ -161,7 +171,7 @@ export default function CaseStudyDetailPage({ params }: { params: Promise<{ slug
                   </a>
 
                   <a
-                    href={`/api/pdf/download?key=${encodeURIComponent(caseStudy.pdf_storage_key || '')}&download=true`}
+                    href={`/api/pdf/download?key=${encodeURIComponent(caseStudy.pdf_file_name || caseStudy.pdf_storage_key || '')}&download=true`}
                     download={caseStudy.pdf_file_name || 'case-study.pdf'}
                     className="inline-flex items-center space-x-2 px-5 py-2.5 bg-gray-900 hover:bg-black text-white font-semibold text-sm rounded-lg shadow-sm transition-colors"
                   >

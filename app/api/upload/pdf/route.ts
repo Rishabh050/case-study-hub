@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { uploadFile } from '@/lib/storage/backblaze';
 import { extractTextFromPDF } from '@/lib/pdf/extractor';
 
 export const maxDuration = 120; // Allow up to 120 seconds timeout for large PDF upload & parsing
@@ -35,10 +34,7 @@ export async function POST(request: NextRequest) {
     const arrayBuffer = await file.arrayBuffer();
     const buffer = Buffer.from(arrayBuffer);
 
-    // 1. Server-side upload to Backblaze B2
-    const { storageKey } = await uploadFile(buffer, file.name, 'application/pdf');
-
-    // 2. Server-side PDF text extraction (pass file.name)
+    // Server-side PDF text extraction for Gemini AI metadata auto-filling
     const pdfExtraction = await extractTextFromPDF(buffer, file.name);
 
     console.log('PDF EXTRACTION RUNTIME CHECK', {
@@ -51,7 +47,7 @@ export async function POST(request: NextRequest) {
       success: true,
       pdfFileName: file.name,
       pdfFileSize: file.size,
-      storageKey,
+      storageKey: file.name,
       extractedText: pdfExtraction.text,
       hasExtractableText: pdfExtraction.hasExtractableText,
       pageCount: pdfExtraction.numPages,
@@ -60,7 +56,7 @@ export async function POST(request: NextRequest) {
   } catch (err: any) {
     console.error('[API /api/upload/pdf] Server error:', err);
     return NextResponse.json(
-      { error: err.message || 'Failed to upload and process PDF' },
+      { error: err.message || 'Failed to process PDF for extraction' },
       { status: 500 }
     );
   }

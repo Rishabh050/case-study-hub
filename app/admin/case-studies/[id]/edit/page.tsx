@@ -175,9 +175,9 @@ export default function EditCaseStudyPage({ params }: { params: Promise<{ id: st
               </h1>
             </div>
 
-            {pdfStorageKey && (
+            {(pdfFileName || pdfStorageKey) && (
               <a
-                href={`/api/pdf/download?key=${encodeURIComponent(pdfStorageKey)}`}
+                href={`/api/pdf/download?key=${encodeURIComponent(pdfFileName || pdfStorageKey || '')}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center space-x-2 px-4 py-2.5 bg-slate-800 hover:bg-slate-900 text-white text-xs font-bold rounded-lg shadow-sm transition-colors"
