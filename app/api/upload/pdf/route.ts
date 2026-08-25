@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { extractTextFromPDF } from '@/lib/pdf/extractor';
+import { uploadToBsServerFtp } from '@/lib/storage/bs-ftp';
 
 export const maxDuration = 120; // Allow up to 120 seconds timeout for large PDF upload & parsing
 export const dynamic = 'force-dynamic';
@@ -17,7 +18,7 @@ export async function POST(request: NextRequest) {
     const isPdf = file.type === 'application/pdf' || file.name.toLowerCase().endsWith('.pdf');
     if (!isPdf) {
       return NextResponse.json(
-        { error: 'Invalid file type. Only PDF documents are allowed.' },
+        { error: 'Invalid file format. Only PDF documents (.pdf) are allowed.' },
         { status: 400 }
       );
     }
@@ -34,20 +35,47 @@ export async function POST(request: NextRequest) {
     const arrayBuffer = await file.arrayBuffer();
     const buffer = Buffer.from(arrayBuffer);
 
-    // Server-side PDF text extraction for Gemini AI metadata auto-filling
-    const pdfExtraction = await extractTextFromPDF(buffer, file.name);
+    // 1. Server-side PDF Upload to BS Server via FTP
+    const ftpResult = await uploadToBsServerFtp(buffer, file.name);
 
-    console.log('PDF EXTRACTION RUNTIME CHECK', {
-      fileName: file.name,
-      textLength: pdfExtraction.text.length,
-      first500Characters: pdfExtraction.text.slice(0, 500),
+    if (!ftpResult.success) {
+      console.error('[API /api/upload/pdf] BS Server FTP Upload Error:', ftpResult.error);
+      return NextResponse.json(
+        {
+          error: `Failed to upload PDF to BS Server: ${ftpResult.error}`,
+          details: ftpResult.error,
+        },
+        { status: 500 }
+      );
+    }
+
+    // 2. Server-side PDF text extraction for Gemini AI metadata auto-filling
+    let pdfExtraction;
+    try {
+      pdfExtraction = await extractTextFromPDF(buffer, file.name);
+    } catch (extractErr: any) {
+      console.warn('[API /api/upload/pdf] PDF text extraction warning:', extractErr.message);
+      pdfExtraction = {
+        text: '',
+        numPages: 0,
+        hasExtractableText: false,
+        error: extractErr.message || 'PDF text extraction failed.',
+      };
+    }
+
+    console.log('[API /api/upload/pdf] SUCCESS:', {
+      fileName: ftpResult.fileName,
+      publicUrl: ftpResult.publicUrl,
+      extractedTextLength: pdfExtraction.text.length,
+      hasExtractableText: pdfExtraction.hasExtractableText,
     });
 
     return NextResponse.json({
       success: true,
-      pdfFileName: file.name,
+      pdfFileName: ftpResult.fileName,
       pdfFileSize: file.size,
-      storageKey: file.name,
+      storageKey: ftpResult.fileName,
+      publicUrl: ftpResult.publicUrl,
       extractedText: pdfExtraction.text,
       hasExtractableText: pdfExtraction.hasExtractableText,
       pageCount: pdfExtraction.numPages,
@@ -56,7 +84,7 @@ export async function POST(request: NextRequest) {
   } catch (err: any) {
     console.error('[API /api/upload/pdf] Server error:', err);
     return NextResponse.json(
-      { error: err.message || 'Failed to process PDF for extraction' },
+      { error: err.message || 'Failed to process and upload PDF' },
       { status: 500 }
     );
   }

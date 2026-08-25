@@ -378,7 +378,7 @@ export default function NewCaseStudyPage() {
             <div className="h-px bg-gray-200 flex-1 mx-3" />
             <div className={`flex items-center space-x-2 text-xs font-bold ${currentStep >= 2 ? 'text-blue-600' : 'text-gray-400'}`}>
               <span className="w-6 h-6 rounded-full bg-blue-100 flex items-center justify-center">2</span>
-              <span>B2 & Extraction</span>
+              <span>BS Upload & Extraction</span>
             </div>
             <div className="h-px bg-gray-200 flex-1 mx-3" />
             <div className={`flex items-center space-x-2 text-xs font-bold ${currentStep >= 3 ? 'text-blue-600' : 'text-gray-400'}`}>
@@ -472,10 +472,10 @@ export default function NewCaseStudyPage() {
           <div className="bg-white rounded-2xl border border-gray-200 p-12 shadow-sm text-center space-y-6">
             <RefreshCw className="w-12 h-12 text-blue-600 animate-spin mx-auto" />
             <h3 className="text-xl font-bold text-gray-900">
-              {currentStep === 2 ? 'Uploading to Backblaze B2 & Extracting Text...' : 'Running AI Metadata Extraction...'}
+              {currentStep === 2 ? 'Uploading to BS Server & Extracting Text...' : 'Running AI Metadata Extraction...'}
             </h3>
             <p className="text-sm text-gray-500 max-w-md mx-auto">
-              Please wait while the server securely uploads the PDF to B2 storage and parses text content into structured metadata.
+              Please wait while the server securely uploads the PDF to BS Server storage and parses text content into structured metadata.
             </p>
           </div>
         )}
