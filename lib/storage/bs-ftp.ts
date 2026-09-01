@@ -36,7 +36,7 @@ export async function uploadToBsServerFtp(
   const isCloudEnv = Boolean(process.env.VERCEL || process.env.AWS_LAMBDA_FUNCTION_NAME || process.env.NODE_ENV === 'production');
 
   const httpEndpoint = process.env.BS_UPLOAD_HTTP_ENDPOINT || (isCloudEnv ? 'https://bs.cisinlive.com/dinesh/rishabh/upload.php' : '');
-  const authToken = process.env.BS_UPLOAD_AUTH_TOKEN || '';
+  const authToken = process.env.BS_UPLOAD_AUTH_TOKEN || 'cisin_case_study_secure_upload_token_2026_9x8f';
 
   // 1. Cloud / HTTPS Upload Pathway (Port 443)
   if (httpEndpoint || isCloudEnv) {
@@ -60,6 +60,8 @@ export async function uploadToBsServerFtp(
       const httpRes = await fetch(httpEndpoint, {
         method: 'POST',
         headers: {
+          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+          Accept: 'application/json',
           'X-Upload-Auth': authToken,
           Authorization: `Bearer ${authToken}`,
         },
